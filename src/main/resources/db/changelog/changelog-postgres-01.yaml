@@ -1,0 +1,36 @@
+databaseChangeLog:
+  - changeSet:
+      id: 100
+      author: bart
+      dbms: PostgreSQL
+      comment: Create beschikkingsbevoegdheid tabel
+      changes:
+        - createTable:
+            schemaName: public
+            tableName: BESCHIKKINGSBEVOEGDHEID
+            columns:
+              - column:
+                  name: ID
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: CODE
+                  type: INT
+              - column:
+                  name: WAARDE
+                  type: varchar(128)
+              - column:
+                  name: DATUMVANAF
+                  type: DATE
+              - column:
+                  name: DATUMTOT
+                  type: DATE
+              - column:
+                  name: TOELICHTING
+                  type: varchar(128)
+        - rollback:
+            dropTable:
+              - tableName: BESCHIKKINGSBEVOEGDHEID

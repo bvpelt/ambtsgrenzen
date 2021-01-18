@@ -51,6 +51,28 @@ public class AmbtsgrenzenClient {
     */
     public AmbtsgrenzenResponse getBestuurlijkeGrens() {
         BestuurlijkGebied[] bestuurlijkGebied;
+        AmbtsgrenzenResponse ambtsgrenzenResponse;
+
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("ContentType", MediaType.APPLICATION_JSON_VALUE);
+        headers.add("x-api-key", X_API_KEY);
+        HttpEntity<AmbtsgrenzenResponse> entity = new HttpEntity<AmbtsgrenzenResponse>(new AmbtsgrenzenResponse(), headers);
+
+        ResponseEntity<AmbtsgrenzenResponse> ambtsgrenzenResponseResponseEntity = restTemplate.exchange(bestuurlijkeGrensUri, HttpMethod.GET, entity, AmbtsgrenzenResponse.class);
+
+        HttpStatus httpStatus = ambtsgrenzenResponseResponseEntity.getStatusCode();
+        if (httpStatus.is2xxSuccessful()) {
+            ambtsgrenzenResponse = ambtsgrenzenResponseResponseEntity.getBody();
+        } else {
+            log.error("Http status: {} - {}", httpStatus.toString(), httpStatus.name());
+            ambtsgrenzenResponse = null;
+        }
+        return ambtsgrenzenResponse;
+    }
+
+    public AmbtsgrenzenResponse getBestuurlijkeGrens(final String url) {
+        BestuurlijkGebied[] bestuurlijkGebied;
 
 
         RestTemplate restTemplate = new RestTemplate();
@@ -64,4 +86,5 @@ public class AmbtsgrenzenClient {
 
         return ambtsgrenzenResponse;
     }
+
 }

@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="5f12b402-98e4-47c8-a8b6-1f5108992afc" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bsoft/com/ambtsgrenzen/client/AmbtsgrenzenClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsoft/com/ambtsgrenzen/client/AmbtsgrenzenClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/bsoft/com/ambtsgrenzen/AmbtsgrenzenApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/bsoft/com/ambtsgrenzen/AmbtsgrenzenApplicationTests.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -114,7 +115,7 @@
       <workItem from="1610822957313" duration="114000" />
       <workItem from="1610823081108" duration="31000" />
       <workItem from="1610823123167" duration="3893000" />
-      <workItem from="1610962256987" duration="3073000" />
+      <workItem from="1610962256987" duration="4910000" />
     </task>
     <servers />
   </component>
@@ -136,7 +137,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/test/java/bsoft/com/ambtsgrenzen/AmbtsgrenzenApplicationTests.java</url>
-          <line>32</line>
+          <line>34</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>

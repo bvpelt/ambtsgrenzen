@@ -30,7 +30,7 @@ class AmbtsgrenzenApplicationTests {
 		log.info("Test02");
 		AmbtsgrenzenClient client = new AmbtsgrenzenClient();
 
-		BestuurlijkGebied[] bestuurlijkGebied = client.getBestuurlijkeGrens();
+		BestuurlijkGebied[] bestuurlijkGebied = client.getBestuurlijkeGrens().getEmbedded().getBestuurlijkeGebieden();
 		log.info("Aantal bestuurlijke grenzen: {}", bestuurlijkGebied.length);
 
 		for (int i = 0; i < bestuurlijkGebied.length; i++) {
@@ -48,6 +48,9 @@ class AmbtsgrenzenApplicationTests {
 			log.info("            - domein: {}", bestuurlijkGebied[i].getDomein());
 			log.info("            - type: {}", bestuurlijkGebied[i].getType());
 		}
+
+		HalLinks halLinks = client.getBestuurlijkeGrens().getLinks();
+
 
 		log.info("Test02 - Ready");
 	}

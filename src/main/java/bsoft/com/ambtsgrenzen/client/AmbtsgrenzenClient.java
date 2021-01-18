@@ -49,7 +49,7 @@ public class AmbtsgrenzenClient {
      }
 
     */
-    public BestuurlijkGebied[] getBestuurlijkeGrens() {
+    public AmbtsgrenzenResponse getBestuurlijkeGrens() {
         BestuurlijkGebied[] bestuurlijkGebied;
 
 
@@ -60,8 +60,8 @@ public class AmbtsgrenzenClient {
         HttpEntity<AmbtsgrenzenResponse> entity = new HttpEntity<AmbtsgrenzenResponse>(new AmbtsgrenzenResponse(), headers);
 
         ResponseEntity<AmbtsgrenzenResponse> ambtsgrenzenResponseResponseEntity = restTemplate.exchange(bestuurlijkeGrensUri, HttpMethod.GET, entity, AmbtsgrenzenResponse.class);
-        bestuurlijkGebied = ambtsgrenzenResponseResponseEntity.getBody().getEmbedded().getBestuurlijkeGebieden();
+        AmbtsgrenzenResponse ambtsgrenzenResponse = ambtsgrenzenResponseResponseEntity.getBody();
 
-        return bestuurlijkGebied;
+        return ambtsgrenzenResponse;
     }
 }

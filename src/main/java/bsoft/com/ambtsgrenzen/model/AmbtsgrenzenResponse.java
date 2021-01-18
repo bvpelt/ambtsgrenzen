@@ -9,6 +9,7 @@ import lombok.Setter;
 public class AmbtsgrenzenResponse {
     @JsonProperty("_embedded")
     private Ambtsgrenzen embedded;
+    @JsonProperty("_links")
     private HalLinks links;
 
 }

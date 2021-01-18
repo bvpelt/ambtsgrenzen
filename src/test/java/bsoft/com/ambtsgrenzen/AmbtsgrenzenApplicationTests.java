@@ -50,6 +50,9 @@ class AmbtsgrenzenApplicationTests {
 		}
 
 		HalLinks halLinks = client.getBestuurlijkeGrens().getLinks();
+		log.info("next: {}", halLinks.getNext().getHref());
+		log.info("self: {}", halLinks.getSelf().getHref());
+		log.info("prev: {}", halLinks.getPrev().getHref());
 
 
 		log.info("Test02 - Ready");

@@ -5,14 +5,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5f12b402-98e4-47c8-a8b6-1f5108992afc" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/bsoft/com/ambtsgrenzen/config/DatabaseConfigPostgres.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/hibernate.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_code_gson_gson_2_8_6.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_micrometer_micrometer_core_1_6_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_hdrhistogram_HdrHistogram_2_1_12.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bsoft/com/ambtsgrenzen/client/AmbtsgrenzenClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsoft/com/ambtsgrenzen/client/AmbtsgrenzenClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/bsoft/com/ambtsgrenzen/AmbtsgrenzenApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/bsoft/com/ambtsgrenzen/AmbtsgrenzenApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ambtsgrenzen.iml" beforeDir="false" afterPath="$PROJECT_DIR$/ambtsgrenzen.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/Description.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/Description.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/db/changelog/db.changelog-master.yaml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -97,7 +112,7 @@
       </list>
     </option>
   </component>
-  <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="false" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -121,16 +136,6 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="2472" y="178" key="#Plugins" timestamp="1610963183740">
-      <screen x="1920" y="0" width="1920" height="1040" />
-    </state>
-    <state x="2472" y="178" key="#Plugins/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1610963183740" />
-    <state x="2576" y="343" key="com.intellij.ide.util.TipDialog" timestamp="1610962258477">
-      <screen x="1920" y="0" width="1920" height="1040" />
-    </state>
-    <state x="2576" y="343" key="com.intellij.ide.util.TipDialog/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1610962258477" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

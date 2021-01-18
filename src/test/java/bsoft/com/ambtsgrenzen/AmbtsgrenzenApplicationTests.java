@@ -44,15 +44,15 @@ class AmbtsgrenzenApplicationTests {
 			log.info("            - geometrie");
 			Geometry geometry = bestuurlijkGebied[i].getGeometrie();
 			log.info("                type: {}", geometry.getType());
-			log.info("                coordinates: {}", geometry.getCoordinates());
+			// log.info("                coordinates: {}", geometry.getCoordinates());
 			log.info("            - domein: {}", bestuurlijkGebied[i].getDomein());
 			log.info("            - type: {}", bestuurlijkGebied[i].getType());
 		}
 
 		HalLinks halLinks = client.getBestuurlijkeGrens().getLinks();
-		log.info("next: {}", halLinks.getNext().getHref());
-		log.info("self: {}", halLinks.getSelf().getHref());
-		log.info("prev: {}", halLinks.getPrev().getHref());
+		log.info("next: {}", halLinks.getNext() != null ? halLinks.getNext().getHref() : "");
+		log.info("self: {}", halLinks.getSelf() != null ? halLinks.getSelf().getHref() : "");
+		log.info("prev: {}", halLinks.getPrev() != null ? halLinks.getPrev().getHref()  : "");
 
 
 		log.info("Test02 - Ready");

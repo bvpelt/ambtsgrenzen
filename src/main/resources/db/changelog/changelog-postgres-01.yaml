@@ -34,3 +34,38 @@ databaseChangeLog:
         - rollback:
             dropTable:
               - tableName: BESCHIKKINGSBEVOEGDHEID
+  - changeSet:
+      id: 200
+      author: bart
+      dbms: PostgreSQL
+      comment: Create bestuurlijkgebied
+      changes:
+        - createTable:
+            schemaName: public
+            tableName: BESTUURLIJKGEBIED
+            columns:
+              - column:
+                  name: ID
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: CODE
+                  type: INT
+              - column:
+                  name: WAARDE
+                  type: varchar(128)
+              - column:
+                  name: DATUMVANAF
+                  type: DATE
+              - column:
+                  name: DATUMTOT
+                  type: DATE
+              - column:
+                  name: GEOMETRY
+                  type: geometry(POLYGON, 28992)
+        - rollback:
+            dropTable:
+              - tableName: BESTUURLIJKGEBIED

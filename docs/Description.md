@@ -15,6 +15,7 @@ See
 ## Postgres
 - Create spatial database https://www.techiediaries.com/postgresql-postgis-tutorial/
 - Postgis http://postgis.net/docs/manual-3.1/
+- Liquibase and Geo http://lonnyj.github.io/liquibase-spatial/geometry_data_type.html
 
 ### Create database
 Become user postgres and create the database

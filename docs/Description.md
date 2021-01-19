@@ -27,6 +27,7 @@ psql ambtsdb
 When postgres starts:
 ```sql
 create extension postgis;
+create extension postgis_topology;
 ```
 ### Create user
 As postgres user

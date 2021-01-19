@@ -13,6 +13,8 @@ See
 - google gson  https://github.com/google/gson
 
 ## Postgres
+See https://www.techiediaries.com/postgresql-postgis-tutorial/
+
 ### Create database
 Become user postgres and create the database
 ```shell

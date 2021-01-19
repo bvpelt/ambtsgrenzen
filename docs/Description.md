@@ -13,7 +13,8 @@ See
 - google gson  https://github.com/google/gson
 
 ## Postgres
-See https://www.techiediaries.com/postgresql-postgis-tutorial/
+- Create spatial database https://www.techiediaries.com/postgresql-postgis-tutorial/
+- Postgis http://postgis.net/docs/manual-3.1/
 
 ### Create database
 Become user postgres and create the database

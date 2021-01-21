@@ -45,6 +45,19 @@
 			<version>${lombok.version}</version>
 		</dependency>
 
+		<!-- JTS -->
+		<dependency>
+			<groupId>org.locationtech.jts</groupId>
+			<artifactId>jts-core</artifactId>
+			<version>1.17.0</version>
+		</dependency>
+		<!-- Hibernate Spatial -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-spatial</artifactId>
+			<version>5.4.12.Final</version>
+		</dependency>
+
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>

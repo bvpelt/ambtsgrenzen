@@ -103,7 +103,7 @@ public class DatabaseConfigPostgres extends DatabaseConfig {
         factoryBean.setDataSource(dataSource);
         factoryBean.setJpaVendorAdapter(jpaVendorAdapter);
         factoryBean.setJpaProperties(hibernateProperties());
-        factoryBean.setPackagesToScan("nl.bsoft.mybatch.config.postgres.repo", "nl.bsoft.mybatch.database");
+        factoryBean.setPackagesToScan("bsoft.com.ambtsgrenzen.repository", "bsoft.com.ambtsgrenzen.database");
         factoryBean.setPersistenceUnitName("postgres-unit");
 
         //factoryBean.setSharedCacheMode(SharedCacheMode.ALL);

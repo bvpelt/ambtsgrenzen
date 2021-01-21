@@ -25,12 +25,15 @@ import java.util.Objects;
 import java.util.Properties;
 
 @Slf4j
+/*
 @Configuration
 @EnableJpaRepositories(
         entityManagerFactoryRef = "entityManagerFactoryPg",
         transactionManagerRef = "transactionManagerPg"
 )
+ */
 public class DatabaseConfigPostgres extends DatabaseConfig {
+    /*
     private PrometheusMeterRegistry prometheusMeterRegistry;
 
     public DatabaseConfigPostgres(final PrometheusMeterRegistry prometheusMeterRegistry) {
@@ -38,28 +41,26 @@ public class DatabaseConfigPostgres extends DatabaseConfig {
     }
 
     @Bean
-    @Primary
     @ConfigurationProperties("postgres.datasource")
     public DataSourceProperties pgDataSourceProperties() {
         return new DataSourceProperties();
     }
 
     @Bean
-    @Primary
     @ConfigurationProperties("postgres.datasource.configuration")
     public HikariDataSource dataSource() {
         log.info("datasourcepg config: {}", pgDataSourceProperties().initializeDataSourceBuilder().type(HikariDataSource.class).build().toString());
         return pgDataSourceProperties().initializeDataSourceBuilder().type(HikariDataSource.class).build();
     }
 
-    /*
+    ----/
     @LiquibaseDataSource
     @Primary
     public DataSource liqDataSourcePg(@Qualifier("dataSource") final HikariDataSource dataSource) {
         // Create data source, set pool size to 1 and return it
         return (DataSource) dataSource;
     }
-     */
+     ---/
 
     @PostConstruct
     public void setUpHikariWithMetrics() {
@@ -82,11 +83,13 @@ public class DatabaseConfigPostgres extends DatabaseConfig {
     @Bean(name="liquibase")
     @DependsOn("dataSource")
     @Primary
+
     public SpringLiquibase liquibase(@Qualifier("dataSource") final DataSource dataSource,
                                      @Qualifier("liquibaseProperties") LiquibaseProperties liquibaseProperties) {
         return springLiquibase(dataSource, liquibaseProperties);
     }
-/*
+
+    --/
     @Bean
     public Liquibase lqPg(@Qualifier("dataSource") final DataSource dataSource) throws SQLException, LiquibaseException {
         Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(dataSource.getConnection()));
@@ -94,15 +97,17 @@ public class DatabaseConfigPostgres extends DatabaseConfig {
         liquibase.update(new Contexts(), new LabelExpression());
         return liquibase;
     }
- */
+ --/
 
     @Bean
+    @Primary
     public LocalContainerEntityManagerFactoryBean entityManagerFactoryPg(@Qualifier("dataSource") final DataSource dataSource) {
         HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
         LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
         factoryBean.setDataSource(dataSource);
         factoryBean.setJpaVendorAdapter(jpaVendorAdapter);
         factoryBean.setJpaProperties(hibernateProperties());
+
         factoryBean.setPackagesToScan("bsoft.com.ambtsgrenzen.repository", "bsoft.com.ambtsgrenzen.database");
         factoryBean.setPersistenceUnitName("postgres-unit");
 
@@ -122,4 +127,6 @@ public class DatabaseConfigPostgres extends DatabaseConfig {
         hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
         return hibernateProperties;
     }
+
+     */
 }

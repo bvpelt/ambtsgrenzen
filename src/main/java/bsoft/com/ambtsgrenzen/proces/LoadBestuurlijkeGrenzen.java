@@ -6,6 +6,10 @@ import bsoft.com.ambtsgrenzen.model.Geometry;
 import bsoft.com.ambtsgrenzen.repository.BestuurlijkGebiedRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.locationtech.jts.geom.*;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.PrecisionModel;
 import org.locationtech.jts.geom.impl.CoordinateArraySequence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -72,7 +76,15 @@ public class LoadBestuurlijkeGrenzen {
             LinearRing linearRing = new LinearRing(cas, geometryFactory);
             log.info("linearRing closed: {}", linearRing.isClosed());
 
+            // exterior ring is empty
+            Coordinate[] geoCoordsExt = new Coordinate[0];
+            CoordinateArraySequence casExt = new CoordinateArraySequence(geoCoords);
+            LinearRing l1 = new LinearRing(casExt, geometryFactory);
+            LinearRing[] linearRingExt = { l1 };
+
             Polygon polygon = new Polygon(linearRing, null, geometryFactory);
+
+            log.info("Created polygon: {}", polygon.toText());
             bg.setGeometry(polygon);
 
             bestuurlijkGebiedRepository.save(bg);

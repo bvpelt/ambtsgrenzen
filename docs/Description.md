@@ -1,11 +1,17 @@
 # Tips
 
 ## Maven
+
+Start application
+```bash 
+mvn spring-boot:run
+```
+
 ### Show dependencies
 See https://javadeveloperzone.com/maven/maven-show-dependency-tree/
 ```bash
-$ mvn dependency:tree
-$ mvn dependency:tree -Dverbose
+mvn dependency:tree
+mvn dependency:tree -Dverbose
 ```
 ## GeoJson
 See 
@@ -53,3 +59,7 @@ grant all privileges on database ambtsdb to testuser;
 psql -h localhost -d ambtsdb 
 psql -h localhost -d ambtsdb --username testuser
 ```
+
+# Referenes
+- https://mkyong.com/spring-boot/spring-boot-spring-data-jpa
+- https://locationtech.github.io/jts/javadoc/index.html

@@ -50,7 +50,7 @@
 			<artifactId>lombok</artifactId>
 			<version>${lombok.version}</version>
 		</dependency>
-		
+
 		<!-- Hibernate Spatial -->
 		<dependency>
 			<groupId>org.hibernate</groupId>

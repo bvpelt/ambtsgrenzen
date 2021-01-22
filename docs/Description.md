@@ -60,6 +60,20 @@ psql -h localhost -d ambtsdb
 psql -h localhost -d ambtsdb --username testuser
 ```
 
-# Referenes
-- https://mkyong.com/spring-boot/spring-boot-spring-data-jpa
-- https://locationtech.github.io/jts/javadoc/index.html
+### Spatial
+See https://www.baeldung.com/hibernate-spatial for an example
+
+# References
+- Geo spation example https://mkyong.com/spring-boot/spring-boot-spring-data-jpa
+- Hibernate spatial tutorial http://www.hibernatespatial.org/documentation/02-Tutorial/01-tutorial4/
+- used as part of hibernate spatial https://locationtech.github.io/jts/javadoc/index.html
+- jts implementation https://locationtech.github.io/jts/
+- https://www.baeldung.com/hibernate-spatial
+- maven packages/classes https://repository.sonatype.org/
+- API Specification for bestuurlijkegrenzen https://brk.basisregistraties.overheid.nl/api/bestuurlijke-grenzen/v2 - api key needed
+- Swagger https://editor.swagger.io/
+- Spring Boot initializer https://start.spring.io/
+- https://www.javaguides.net/2018/09/spring-data-jpa-repository-testing-using-spring-boot-datajpatest.html
+
+
+

@@ -2,7 +2,6 @@ package bsoft.com.ambtsgrenzen.client;
 
 import bsoft.com.ambtsgrenzen.model.AmbtsgrenzenResponse;
 import bsoft.com.ambtsgrenzen.model.BestuurlijkGebied;
-import bsoft.com.ambtsgrenzen.model.Post;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
@@ -19,36 +18,7 @@ public class AmbtsgrenzenClient {
 
     }
 
-    public Post getPost() {
-        RestTemplate restTemplate = new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("ContentType", MediaType.APPLICATION_JSON_VALUE);
-        HttpEntity<Post> entity = new HttpEntity<Post>(new Post(), headers);
 
-        ResponseEntity<Post> postEntity = restTemplate.exchange(uri, HttpMethod.GET, entity, Post.class, 9);
-        Post result = postEntity.getBody();
-
-        log.info("AmbtsgrenzenClient - id: {} userid: {} title: {} body: {}", result.getId(), result.getUserId(), result.getTitle(), result.getBody());
-
-        return result;
-    }
-
-    /*
-     Structuur
-     _embedded {
-        bestuurlijkeGebieden {[]},
-     _links {
-        next:
-            href: http://...
-        prev:
-            href: http://..
-        self:
-            href: http://...
-     }
-
-     }
-
-    */
     public AmbtsgrenzenResponse getBestuurlijkeGrens() {
         BestuurlijkGebied[] bestuurlijkGebied;
         AmbtsgrenzenResponse ambtsgrenzenResponse;

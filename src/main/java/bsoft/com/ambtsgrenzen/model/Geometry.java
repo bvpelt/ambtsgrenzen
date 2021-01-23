@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Geometry {
-        private String type;
-        private double[][][] coordinates;
+    private String type;
+    private double[][][] coordinates;
 
 }

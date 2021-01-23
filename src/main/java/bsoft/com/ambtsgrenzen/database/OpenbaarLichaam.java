@@ -1,6 +1,6 @@
 package bsoft.com.ambtsgrenzen.database;
 
-import lombok.*;
+import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;

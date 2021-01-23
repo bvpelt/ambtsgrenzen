@@ -1,15 +1,11 @@
 package bsoft.com.ambtsgrenzen.proces;
 
 import bsoft.com.ambtsgrenzen.client.AmbtsgrenzenClient;
-import bsoft.com.ambtsgrenzen.model.*;
 import bsoft.com.ambtsgrenzen.model.Geometry;
+import bsoft.com.ambtsgrenzen.model.*;
 import bsoft.com.ambtsgrenzen.repository.BestuurlijkGebiedRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.locationtech.jts.geom.*;
-import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.GeometryFactory;
-import org.locationtech.jts.geom.PrecisionModel;
 import org.locationtech.jts.geom.impl.CoordinateArraySequence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -80,7 +76,7 @@ public class LoadBestuurlijkeGrenzen {
             Coordinate[] geoCoordsExt = new Coordinate[0];
             CoordinateArraySequence casExt = new CoordinateArraySequence(geoCoords);
             LinearRing l1 = new LinearRing(casExt, geometryFactory);
-            LinearRing[] linearRingExt = { l1 };
+            LinearRing[] linearRingExt = {l1};
 
             Polygon polygon = new Polygon(linearRing, null, geometryFactory);
 

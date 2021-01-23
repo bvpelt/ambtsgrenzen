@@ -1,6 +1,6 @@
 package bsoft.com.ambtsgrenzen.database;
 
-import lombok.*;
+import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 import org.locationtech.jts.geom.Polygon;
 
@@ -8,8 +8,8 @@ import javax.persistence.*;
 
 
 @Data
-@Entity(name="BestuurlijkGebied")
-@Table(name="BESTUURLIJKGEBIED")
+@Entity(name = "BestuurlijkGebied")
+@Table(name = "BESTUURLIJKGEBIED")
 public class BestuurlijkGebied {
     @Id
     @GeneratedValue(generator = "increment")

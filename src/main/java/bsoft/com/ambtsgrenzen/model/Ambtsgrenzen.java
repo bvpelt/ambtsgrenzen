@@ -7,5 +7,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Ambtsgrenzen {
-    private BestuurlijkGebied[]  bestuurlijkeGebieden;
+    private BestuurlijkGebied[] bestuurlijkeGebieden;
 }

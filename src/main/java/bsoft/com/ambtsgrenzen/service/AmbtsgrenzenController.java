@@ -11,17 +11,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AmbtsgrenzenController {
 
-    private LoadBestuurlijkeGrenzen loadBestuurlijkeGrenzen;
+    private final LoadBestuurlijkeGrenzen loadBestuurlijkeGrenzen;
 
     @Autowired
-    public AmbtsgrenzenController(LoadBestuurlijkeGrenzen loadBestuurlijkeGrenzen ) {
+    public AmbtsgrenzenController(LoadBestuurlijkeGrenzen loadBestuurlijkeGrenzen) {
         this.loadBestuurlijkeGrenzen = loadBestuurlijkeGrenzen;
     }
 
     @RequestMapping(value = "/bestuurlijkgebied")
     public ResponseEntity<AmbtsgrenzenResponse> getBestuurlijkGebied() {
         AmbtsgrenzenResponse ambtsgrenzenResponse = new AmbtsgrenzenResponse();
-        ResponseEntity<AmbtsgrenzenResponse> ambtsgrenzenResponseResponseEntity  = ResponseEntity.ok(ambtsgrenzenResponse);
+        ResponseEntity<AmbtsgrenzenResponse> ambtsgrenzenResponseResponseEntity = ResponseEntity.ok(ambtsgrenzenResponse);
 
         log.info("AmbtsgrenzenController - start loader");
         int status = loadBestuurlijkeGrenzen.load();

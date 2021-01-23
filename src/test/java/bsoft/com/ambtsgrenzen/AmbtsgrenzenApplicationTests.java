@@ -26,7 +26,7 @@ class AmbtsgrenzenApplicationTests {
     void test01() {
         log.info("Test01");
         AmbtsgrenzenClient client = new AmbtsgrenzenClient();
-        
+
         log.info("Test01 - Ready");
     }
 

@@ -27,6 +27,5 @@ public class BestuurlijkGebied {
     private String type;
 
     @Column(name = "GEOMETRY")
-    //@Type(type="org.hibernate.spatial.GeometryType")
     private Polygon geometry;
 }

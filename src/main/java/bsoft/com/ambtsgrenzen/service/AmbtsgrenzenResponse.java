@@ -11,5 +11,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class AmbtsgrenzenResponse {
     private int status;
+    private int aantalBestuurlijkeGebieden;
     private String melding;
 }

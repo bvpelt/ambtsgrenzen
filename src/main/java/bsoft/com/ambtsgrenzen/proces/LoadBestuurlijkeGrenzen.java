@@ -4,6 +4,8 @@ import bsoft.com.ambtsgrenzen.client.AmbtsgrenzenClient;
 import bsoft.com.ambtsgrenzen.model.Geometry;
 import bsoft.com.ambtsgrenzen.model.*;
 import bsoft.com.ambtsgrenzen.repository.BestuurlijkGebiedRepository;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.locationtech.jts.geom.*;
 import org.locationtech.jts.geom.impl.CoordinateArraySequence;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 
+@NoArgsConstructor
 @Slf4j
 @Transactional
 @Service

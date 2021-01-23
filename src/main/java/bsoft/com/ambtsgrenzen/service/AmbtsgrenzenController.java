@@ -1,17 +1,20 @@
 package bsoft.com.ambtsgrenzen.service;
 
 import bsoft.com.ambtsgrenzen.proces.LoadBestuurlijkeGrenzen;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@NoArgsConstructor
 @Slf4j
 @RestController
 public class AmbtsgrenzenController {
 
-    private final LoadBestuurlijkeGrenzen loadBestuurlijkeGrenzen;
+    private LoadBestuurlijkeGrenzen loadBestuurlijkeGrenzen = null;
 
     @Autowired
     public AmbtsgrenzenController(LoadBestuurlijkeGrenzen loadBestuurlijkeGrenzen) {

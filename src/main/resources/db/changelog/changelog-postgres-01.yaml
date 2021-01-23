@@ -1,0 +1,71 @@
+databaseChangeLog:
+  - changeSet:
+      id: 100
+      author: bart
+      dbms: PostgreSQL
+      comment: Create bestuurlijkgebied
+      changes:
+        - createTable:
+            schemaName: public
+            tableName: BESTUURLIJKGEBIED
+            columns:
+              - column:
+                  name: ID
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: IDENTIFICATIE
+                  type: varchar(24)
+              - column:
+                  name: DOMEIN
+                  type: varchar(128)
+              - column:
+                  name: TYPE
+                  type: varchar(128)
+              - column:
+                  name: GEOMETRY
+                  type: geometry(POLYGON, 28992)
+        - rollback:
+            dropTable:
+              - tableName: BESTUURLIJKGEBIED
+  - changeSet:
+      id: 110
+      author: bart
+      dbms: PostgreSQL
+      comment: Create openbaarlichaam
+      changes:
+        - createTable:
+            schemaName: public
+            tableName: OPENBAARLICHAAM
+            columns:
+              - column:
+                  name: ID
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: CODE
+                  type: varchar(12)
+              - column:
+                  name: OIN
+                  type: varchar(24)
+              - column:
+                  name: TYPE
+                  type: varchar(128)
+              - column:
+                  name: NAAM
+                  type: varchar(128)
+              - column:
+                  name: BESTUURSLAAG
+                  type: varchar(128)
+              - column:
+                  name: GEOMETRY
+                  type: geometry(POLYGON, 28992)
+        - rollback:
+            dropTable:
+              - tableName: OPENBAARLICHAAM

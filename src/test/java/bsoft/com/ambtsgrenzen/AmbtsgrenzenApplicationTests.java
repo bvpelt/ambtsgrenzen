@@ -3,6 +3,8 @@ package bsoft.com.ambtsgrenzen;
 import bsoft.com.ambtsgrenzen.client.AmbtsgrenzenClient;
 import bsoft.com.ambtsgrenzen.model.Geometry;
 import bsoft.com.ambtsgrenzen.model.*;
+import bsoft.com.ambtsgrenzen.utils.GeometryToJTS;
+import liquibase.pro.packaged.L;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.locationtech.jts.geom.*;
@@ -49,7 +51,7 @@ class AmbtsgrenzenApplicationTests {
             MetaData metaData = bestuurlijkGebied[i].getEmbedded().getMetadata();
             log.info("            -- metadata - beginGeldigheid: {}", metaData.getBeginGeldigheid());
             SelfLink link = bestuurlijkGebied[i].getLinks();
-            log.info("            - links self: {}", link.getSelf());
+            log.info("            - links self: {}", link.getSelf().getHref());
             log.info("            - geometrie");
             Geometry geometry = bestuurlijkGebied[i].getGeometrie();
             log.info("                type: {}", geometry.getType());
@@ -62,25 +64,49 @@ class AmbtsgrenzenApplicationTests {
             bg.setDomein(bestuurlijkGebied[i].getDomein());
             bg.setType(bestuurlijkGebied[i].getType());
 
+            /*
+            GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(), 28992);
+
             double[][][] coords = geometry.getCoordinates();
-            double[][] lines;
-            Coordinate[] geoCoords = new Coordinate[coords[0].length];
-            for (int k = 0; k < coords.length; k++) {
-                log.info("line[{}] size: {}", k, coords[k].length);
-                lines = coords[k];
-                for (int l = 0; l < lines.length; l++) {
-                    //       log.info("lines[{}] size: {}", l, lines[l].length);
-                    Coordinate c = new Coordinate(lines[l][0], lines[l][1]);
-                    geoCoords[l] = c;
+            log.info("Aantal polygonen: {}", coords.length);
+
+            // for a polygon there is minimal the outlineCoordinates and 0..n holes
+            // process outlineCoordinates
+            double[][] lines = coords[0];
+            Coordinate[] outlineCoordinates = new Coordinate[coords[0].length];
+            log.info("number of coordinates in the outline: {}", lines.length);
+            for (int l = 0; l < lines.length; l++) {
+                //       log.info("lines[{}] size: {}", l, lines[l].length);
+                Coordinate c = new Coordinate(lines[l][0], lines[l][1]);
+                outlineCoordinates[l] = c;
+            }
+            CoordinateArraySequence cas = new CoordinateArraySequence(outlineCoordinates);
+            LinearRing outline = new LinearRing(cas, geometryFactory);
+            log.info("outline is closed: {}", outline.isClosed());
+
+            // process holes
+            LinearRing[] holes = null;
+            if (coords.length > 1) {
+                log.info("Holes found!");
+                holes = new LinearRing[coords.length - 1];
+                for (int k = 1; k < coords.length; k++) {
+                    lines = coords[k];
+                    log.info("number of coordinates in hole {}: {}", k - 1, lines.length);
+                    for (int l = 0; l < lines.length; l++) {
+                        //       log.info("lines[{}] size: {}", l, lines[l].length);
+                        Coordinate c = new Coordinate(lines[l][0], lines[l][1]);
+                        outlineCoordinates[l] = c;
+                    }
+                    CoordinateArraySequence casHole = new CoordinateArraySequence(outlineCoordinates);
+                    LinearRing hole = new LinearRing(casHole, geometryFactory);
+                    holes[k - 1] = hole;
                 }
             }
 
-            GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(), 28992);
-            CoordinateArraySequence cas = new CoordinateArraySequence(geoCoords);
-            LinearRing linearRing = new LinearRing(cas, geometryFactory);
-            log.info("linearRing closed: {}", linearRing.isClosed());
+            Polygon polygon = new Polygon(outline, holes, geometryFactory);
 
-            Polygon polygon = new Polygon(linearRing, null, geometryFactory);
+             */
+            Polygon polygon = new GeometryToJTS().geometryToPolygon(geometry);
             bg.setGeometry(polygon);
 
         }

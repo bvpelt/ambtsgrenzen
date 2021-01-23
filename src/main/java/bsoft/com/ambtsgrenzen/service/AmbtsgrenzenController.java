@@ -25,11 +25,19 @@ public class AmbtsgrenzenController {
         AmbtsgrenzenResponse ambtsgrenzenResponse = new AmbtsgrenzenResponse();
         ResponseEntity<AmbtsgrenzenResponse> ambtsgrenzenResponseResponseEntity = ResponseEntity.ok(ambtsgrenzenResponse);
 
-        log.info("AmbtsgrenzenController - start loader");
-        int status = loadBestuurlijkeGrenzen.load();
-        log.info("AmbtsgrenzenController - end   loader");
+        long status = 0;
+        String melding = "";
+        try {
+            log.info("AmbtsgrenzenController - start loader");
+            status = loadBestuurlijkeGrenzen.load();
+            log.info("AmbtsgrenzenController - end   loader status: {}", status);
+        } catch (Exception e) {
+            melding = e.getMessage();
+        }
+        ambtsgrenzenResponse.setStatus(status > 0 ? 1 : 0);
+        ambtsgrenzenResponse.setAantalBestuurlijkeGebieden(status);
+        ambtsgrenzenResponse.setMelding(melding);
 
-        ambtsgrenzenResponse.setStatus(status);
         return ambtsgrenzenResponseResponseEntity;
     }
 }

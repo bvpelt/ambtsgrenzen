@@ -74,6 +74,6 @@ See https://www.baeldung.com/hibernate-spatial for an example
 - Swagger https://editor.swagger.io/
 - Spring Boot initializer https://start.spring.io/
 - https://www.javaguides.net/2018/09/spring-data-jpa-repository-testing-using-spring-boot-datajpatest.html
-
+- read geojson -> java https://stackoverflow.com/questions/53957417/parse-geojson-file-with-java-topology-suite-or-geotools
 
 

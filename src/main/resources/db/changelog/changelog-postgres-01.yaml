@@ -27,7 +27,7 @@ databaseChangeLog:
                   type: varchar(128)
               - column:
                   name: GEOMETRY
-                  type: geometry(POLYGON, 28992)
+                  type: geometry(GEOMETRY, 28992)
         - rollback:
             dropTable:
               - tableName: BESTUURLIJKGEBIED

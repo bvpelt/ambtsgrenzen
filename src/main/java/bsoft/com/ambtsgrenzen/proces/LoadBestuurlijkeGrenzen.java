@@ -92,8 +92,10 @@ public class LoadBestuurlijkeGrenzen {
 
     private long getNextPage(String url) {
         log.info("LoadBestuurlijkeGrenzen - start getNextPage");
-        if (client.getBestuurlijkeGrens() != null) {
-            BestuurlijkGebied[] bestuurlijkGebied = client.getBestuurlijkeGrens(url).getEmbedded().getBestuurlijkeGebieden();
+
+        AmbtsgrenzenResponse response = client.getBestuurlijkeGrens(url);
+        if (response != null) {
+            BestuurlijkGebied[] bestuurlijkGebied = response.getEmbedded().getBestuurlijkeGebieden();
             log.info("Aantal bestuurlijke grenzen: {}", bestuurlijkGebied.length);
 
             int i = 0;
@@ -119,18 +121,24 @@ public class LoadBestuurlijkeGrenzen {
                 bg.setDomein(bestuurlijkGebied[i].getDomein());
                 bg.setType(bestuurlijkGebied[i].getType());
 
-                Polygon polygon = new GeometryToJTS().geometryToPolygon(geometry);
+                if (geometry.getType().equals("Polygon")) {
+                    Polygon polygon = new GeometryToJTS().geometryToPolygon(geometry);
 
-                //log.info("Created polygon: {}", polygon.toText());
-                bg.setGeometry(polygon);
+                    //log.info("Created polygon: {}", polygon.toText());
+                    bg.setGeometry(polygon);
 
-                //bestuurlijkGebiedRepository.save(bg);
-                if (persistBestuurlijkGebied(bg) > 0L) {
-                    status++;
-                }
+                    //bestuurlijkGebiedRepository.save(bg);
+                    if (persistBestuurlijkGebied(bg) > 0L) {
+                        status++;
+                    }
+                }  else {
+                log.warn("LoadBestuurlijkeGrenzen - found geometry type {}, not yet supported", geometry.getType());
             }
 
-            next = client.getBestuurlijkeGrens().getLinks().getNext().getHref();
+        }
+
+            next = response.getLinks().getNext().getHref();
+            log.info("LoadBestuurlijkeGrenzen - found next: {}", next);
         }
         log.info("LoadBestuurlijkeGrenzen - end   getNextPage");
         return status;

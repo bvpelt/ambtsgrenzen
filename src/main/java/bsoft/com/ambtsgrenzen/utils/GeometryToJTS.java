@@ -1,6 +1,7 @@
 package bsoft.com.ambtsgrenzen.utils;
 
 import bsoft.com.ambtsgrenzen.model.Geometry;
+import bsoft.com.ambtsgrenzen.model.Polygon;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.locationtech.jts.geom.*;
@@ -11,8 +12,8 @@ import org.locationtech.jts.geom.impl.CoordinateArraySequence;
 
 public class GeometryToJTS {
 
-    public Polygon geometryToPolygon(Geometry geometry) {
-        Polygon polygon = null;
+    public bsoft.com.ambtsgrenzen.model.Polygon geometryToPolygon(Geometry geometry) {
+        bsoft.com.ambtsgrenzen.model.Polygon polygon = null;
 
         GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(), 28992);
 

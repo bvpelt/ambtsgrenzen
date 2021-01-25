@@ -1,17 +1,23 @@
 package bsoft.com.ambtsgrenzen.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = Point.class, name = "Point"),
+        @JsonSubTypes.Type(value = LineString.class, name = "LineString"),
+        @JsonSubTypes.Type(value = Polygon.class, name = "Polygon"),
+        @JsonSubTypes.Type(value = MultiPoint.class, name = "MultiPoint"),
+        @JsonSubTypes.Type(value = MultiLineString.class, name = "MultiLineString"),
+        @JsonSubTypes.Type(value = MultiPolygon.class, name = "MultiPolygon"),
+})
+
+@JsonPropertyOrder({"type", "coordinates", "bbox"})
 public class Geometry {
-    private String type;
+    private  String type;
 
-    private double[][][] coordinates;
-
+    public String getType() {
+        return type;
+    }
 }
+

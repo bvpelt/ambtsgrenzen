@@ -12,11 +12,13 @@ import org.locationtech.jts.geom.impl.CoordinateArraySequence;
 
 public class GeometryToJTS {
 
-    public bsoft.com.ambtsgrenzen.model.Polygon geometryToPolygon(Geometry geometry) {
-        bsoft.com.ambtsgrenzen.model.Polygon polygon = null;
+    private GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(), 28992);
 
-        GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(), 28992);
+    public org.locationtech.jts.geom.Geometry geometryToPolygon(Geometry geometry) {
+        org.locationtech.jts.geom.Geometry geo = null;
 
+
+        /*
         double[][][] coords = geometry.getCoordinates();
         log.info("Aantal polygonen: {}", coords.length);
         double[][] lines = null;
@@ -49,7 +51,7 @@ public class GeometryToJTS {
         }
 
         polygon = new Polygon(outline, holes, geometryFactory);
-
-        return polygon;
+*/
+        return geo;
     }
 }

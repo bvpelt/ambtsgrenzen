@@ -76,4 +76,5 @@ See https://www.baeldung.com/hibernate-spatial for an example
 - https://www.javaguides.net/2018/09/spring-data-jpa-repository-testing-using-spring-boot-datajpatest.html
 - read geojson -> java https://stackoverflow.com/questions/53957417/parse-geojson-file-with-java-topology-suite-or-geotools
 - see https://github.com/bjornharrtell/jts2geojson/tree/master/src/main/java/org/wololo/geojson
-
+- see https://stackoverflow.com/questions/10329706/json-deserialization-into-other-class-hierarchy-using-jackson/10336625#10336625
+- see https://www.baeldung.com/jackson-annotations

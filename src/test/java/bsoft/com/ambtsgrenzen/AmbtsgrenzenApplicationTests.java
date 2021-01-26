@@ -60,8 +60,12 @@ class AmbtsgrenzenApplicationTests {
             bg.setDomein(bestuurlijkGebied[i].getDomein());
             bg.setType(bestuurlijkGebied[i].getType());
 
-            Polygon polygon = new GeometryToJTS().geometryToPolygon(geometry);
-            bg.setGeometry(polygon);
+            org.locationtech.jts.geom.Geometry geo = new GeometryToJTS().geometryToPolygon(geometry);
+            //Polygon polygon = new GeometryToJTS().geometryToPolygon(geometry);
+
+            if (geo != null) {
+                bg.setGeometry(geo);
+            }
         }
 
         HalLinks halLinks = client.getBestuurlijkeGrens().getLinks();
@@ -150,18 +154,18 @@ class AmbtsgrenzenApplicationTests {
                 bg.setDomein(bestuurlijkGebied[i].getDomein());
                 bg.setType(bestuurlijkGebied[i].getType());
 
-                if (geometry.getType().equals("Polygon")) {
-                    Polygon polygon = new GeometryToJTS().geometryToPolygon(geometry);
+                org.locationtech.jts.geom.Geometry geo = new GeometryToJTS().geometryToPolygon(geometry);
+                    //Polygon polygon = new GeometryToJTS().geometryToPolygon(geometry);
                     //log.info("Created polygon: {}", polygon.toText());
-                    bg.setGeometry(polygon);
-                } else {
-                    log.warn("LoadBestuurlijkeGrenzen - found geometry type {}, not yet supported", geometry.getType());
-                }
+                if (geo != null ) {
+                    bg.setGeometry(geo);
 
-                //bestuurlijkGebiedRepository.save(bg);
-               // if (persistBestuurlijkGebied(bg) > 0L) {
-               //     status++;
-               // }
+
+                    //bestuurlijkGebiedRepository.save(bg);
+                    // if (persistBestuurlijkGebied(bg) > 0L) {
+                    //     status++;
+                    // }
+                }
             }
 
             next = response.getLinks().getNext().getHref();

@@ -2,6 +2,7 @@ package bsoft.com.ambtsgrenzen.database;
 
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
+import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.Polygon;
 
 import javax.persistence.*;
@@ -27,5 +28,5 @@ public class BestuurlijkGebied {
     private String type;
 
     @Column(name = "GEOMETRY")
-    private Polygon geometry;
+    private Geometry geometry;
 }

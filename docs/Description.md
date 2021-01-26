@@ -80,3 +80,8 @@ See https://www.baeldung.com/hibernate-spatial for an example
 - see https://www.baeldung.com/jackson-annotations
 - see https://www.baeldung.com/jackson-exception
 - see https://www.baeldung.com/jackson
+- see https://stackoverflow.com/questions/29739972/how-to-get-geojson-from-spring-rest-controller
+    - see https://github.com/bedatadriven/jackson-datatype-jts#reading-and-writing-geometry-types
+- see https://stackoverflow.com/questions/45713934/jackson-deserialize-geojson-point-in-spring-boot
+- see https://stackoverflow.com/questions/64724130/kotlin-and-jackson-missing-type-id-when-trying-to-resolve-subtype-of-simple-ty
+- see https://www.xspdf.com/resolution/53220889.html

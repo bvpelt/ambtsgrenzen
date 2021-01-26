@@ -77,6 +77,13 @@
 			<version>${micrometer.version}</version>
 		</dependency>
 
+		<!-- GeoJSON -> JTS -->
+		<dependency>
+			<groupId>com.bedatadriven</groupId>
+			<artifactId>jackson-datatype-jts</artifactId>
+			<version>2.4</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>

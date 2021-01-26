@@ -31,7 +31,7 @@ public class LoadBestuurlijkeGrenzen {
 
     public long load() {
         log.info("LoadBestuurlijkeGrenzen - start load");
-        int page = 1;
+        int page = 40;
         String url = bestuurlijkeGrensUri + "&page=" + page;
         status = getNextPage(url);
         log.info("LoadBestuurlijkeGrenzen - load status: {} next: {}", status, next);

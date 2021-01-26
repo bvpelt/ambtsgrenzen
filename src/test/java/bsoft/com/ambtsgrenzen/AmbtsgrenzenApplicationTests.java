@@ -1,13 +1,14 @@
 package bsoft.com.ambtsgrenzen;
 
 import bsoft.com.ambtsgrenzen.client.AmbtsgrenzenClient;
-import bsoft.com.ambtsgrenzen.model.Geometry;
 import bsoft.com.ambtsgrenzen.model.*;
 import bsoft.com.ambtsgrenzen.utils.GeometryToJTS;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-import org.locationtech.jts.geom.*;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.io.IOException;
 
 @Slf4j
 @SpringBootTest
@@ -32,7 +33,6 @@ class AmbtsgrenzenApplicationTests {
     void test02() {
         log.info("Start Test02");
         AmbtsgrenzenClient client = new AmbtsgrenzenClient();
-
 
         BestuurlijkGebied[] bestuurlijkGebied = client.getBestuurlijkeGrens().getEmbedded().getBestuurlijkeGebieden();
         log.info("Aantal bestuurlijke grenzen: {}", bestuurlijkGebied.length);
@@ -155,11 +155,10 @@ class AmbtsgrenzenApplicationTests {
                 bg.setType(bestuurlijkGebied[i].getType());
 
                 org.locationtech.jts.geom.Geometry geo = new GeometryToJTS().geometryToPolygon(geometry);
-                    //Polygon polygon = new GeometryToJTS().geometryToPolygon(geometry);
-                    //log.info("Created polygon: {}", polygon.toText());
-                if (geo != null ) {
+                //Polygon polygon = new GeometryToJTS().geometryToPolygon(geometry);
+                //log.info("Created polygon: {}", polygon.toText());
+                if (geo != null) {
                     bg.setGeometry(geo);
-
 
                     //bestuurlijkGebiedRepository.save(bg);
                     // if (persistBestuurlijkGebied(bg) > 0L) {
@@ -173,5 +172,22 @@ class AmbtsgrenzenApplicationTests {
         }
         log.info("LoadBestuurlijkeGrenzen - end   getNextPage");
         return status;
+    }
+
+
+    @Test
+    public void test04()
+            throws IOException {
+
+        String json2 = "{\"geometrie\":{\"type\":\"Polygon\", \"coordinates\": [ [ [ 5.020295189, 52.025627264 ], [ 5.02031339, 52.025591421 ], [ 5.020295189, 52.025627264 ]]] }}";
+        String json3 = "{\"geometrie\":{\"type\":\"Point\", \"coordinates\": [ 5.020295189, 52.025627264 ] }}";
+        log.info("Using json: {}", json3);
+
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            mapper.reader().forType(Point.class).readValue(json3);
+        } catch (Exception e) {
+            log.info("Got excpetion: {}", e);
+        }
     }
 }

@@ -1,25 +1,29 @@
 package bsoft.com.ambtsgrenzen.model;
 
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.*;
 
-@JsonSubTypes({
-        @JsonSubTypes.Type(value = Point.class, name = "Point"),
-        @JsonSubTypes.Type(value = LineString.class, name = "LineString"),
-        @JsonSubTypes.Type(value = Polygon.class, name = "Polygon"),
-        @JsonSubTypes.Type(value = MultiPoint.class, name = "MultiPoint"),
-        @JsonSubTypes.Type(value = MultiLineString.class, name = "MultiLineString"),
-        @JsonSubTypes.Type(value = MultiPolygon.class, name = "MultiPolygon"),
-})
-@JsonTypeInfo(use=JsonTypeInfo.Id.NAME,
-        include= JsonTypeInfo.As.PROPERTY, property="@type")
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.EXISTING_PROPERTY,
+        property = "type"
+)
+@JsonSubTypes( {
+        @JsonSubTypes.Type(value=Point.class, name="Point"  ),
+        @JsonSubTypes.Type(value=LineString.class, name="LineString"  ),
+        @JsonSubTypes.Type(value=Polygon.class, name="Polygon"  ),
+        @JsonSubTypes.Type(value=MultiPoint.class, name="MultiPoint"  ),
+        @JsonSubTypes.Type(value=MultiLineString.class, name="MultiLineString"  ),
+        @JsonSubTypes.Type(value=MultiPolygon.class, name="MultiPolygon"  ),
+        @JsonSubTypes.Type(value=Feature.class, name="Feature"  ),
+        @JsonSubTypes.Type(value=FeatureCollection.class, name="FeatureCollection"  ),
+        @JsonSubTypes.Type(value=GeometryCollection.class, name="GeometryCollection"  )
+} )
+
 @JsonPropertyOrder({"type", "coordinates", "bbox"})
-public class Geometry {
-    private  String type;
-
-    public String getType() {
-        return type;
+public abstract class Geometry extends GeoJSON {
+    @JsonCreator
+    public Geometry() {
+        super();
     }
 }
 

@@ -2,8 +2,10 @@ package bsoft.com.ambtsgrenzen.model;
 
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Polygon extends Geometry {
     private final double[][][] coordinates;
     private final double[] bbox;

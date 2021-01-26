@@ -2,9 +2,11 @@ package bsoft.com.ambtsgrenzen.model;
 
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Point   extends Geometry {
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class Point extends Geometry {
     private final double[] coordinates;
     private final double[] bbox;
 

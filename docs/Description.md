@@ -78,3 +78,5 @@ See https://www.baeldung.com/hibernate-spatial for an example
 - see https://github.com/bjornharrtell/jts2geojson/tree/master/src/main/java/org/wololo/geojson
 - see https://stackoverflow.com/questions/10329706/json-deserialization-into-other-class-hierarchy-using-jackson/10336625#10336625
 - see https://www.baeldung.com/jackson-annotations
+- see https://www.baeldung.com/jackson-exception
+- see https://www.baeldung.com/jackson

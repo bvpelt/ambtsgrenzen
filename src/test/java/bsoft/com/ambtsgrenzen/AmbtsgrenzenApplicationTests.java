@@ -181,11 +181,12 @@ class AmbtsgrenzenApplicationTests {
 
         String json2 = "{\"geometrie\":{\"type\":\"Polygon\", \"coordinates\": [ [ [ 5.020295189, 52.025627264 ], [ 5.02031339, 52.025591421 ], [ 5.020295189, 52.025627264 ]]] }}";
         String json3 = "{\"geometrie\":{\"type\":\"Point\", \"coordinates\": [ 5.020295189, 52.025627264 ] }}";
+        String json4 = "{\"type\":\"Point\", \"coordinates\": [ 5.020295189, 52.025627264 ] }";
         log.info("Using json: {}", json3);
 
         ObjectMapper mapper = new ObjectMapper();
         try {
-            mapper.reader().forType(Point.class).readValue(json3);
+            mapper.reader().forType(Polygon.class).readValue(json3);
         } catch (Exception e) {
             log.info("Got excpetion: {}", e);
         }

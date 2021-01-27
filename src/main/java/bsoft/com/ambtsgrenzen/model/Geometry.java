@@ -1,29 +1,29 @@
 package bsoft.com.ambtsgrenzen.model;
 
 import com.fasterxml.jackson.annotation.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@AllArgsConstructor
+@Getter
+@Setter
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,
-        include = JsonTypeInfo.As.EXISTING_PROPERTY,
-        property = "type"
-)
-@JsonSubTypes( {
-        @JsonSubTypes.Type(value=Point.class, name="Point"  ),
-        @JsonSubTypes.Type(value=LineString.class, name="LineString"  ),
-        @JsonSubTypes.Type(value=Polygon.class, name="Polygon"  ),
-        @JsonSubTypes.Type(value=MultiPoint.class, name="MultiPoint"  ),
-        @JsonSubTypes.Type(value=MultiLineString.class, name="MultiLineString"  ),
-        @JsonSubTypes.Type(value=MultiPolygon.class, name="MultiPolygon"  ),
-        @JsonSubTypes.Type(value=Feature.class, name="Feature"  ),
-        @JsonSubTypes.Type(value=FeatureCollection.class, name="FeatureCollection"  ),
-        @JsonSubTypes.Type(value=GeometryCollection.class, name="GeometryCollection"  )
-} )
+        include = JsonTypeInfo.As.PROPERTY,
+        property = "type")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = Point.class, name = "Point"),
+        @JsonSubTypes.Type(value = Polygon.class, name = "Polygon"),
+        @JsonSubTypes.Type(value = MultiPolygon.class, name = "MultiPolygon")
+})
+public abstract class Geometry {
+    private String type;
 
-@JsonPropertyOrder({"type", "coordinates", "bbox"})
-public abstract class Geometry extends GeoJSON {
     @JsonCreator
     public Geometry() {
-        super();
+        setType(getClass().getSimpleName());
     }
 }
 

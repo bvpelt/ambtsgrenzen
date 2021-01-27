@@ -1,11 +1,9 @@
 package bsoft.com.ambtsgrenzen.utils;
 
 import bsoft.com.ambtsgrenzen.model.Geometry;
-import bsoft.com.ambtsgrenzen.model.Polygon;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.locationtech.jts.geom.*;
-import org.locationtech.jts.geom.impl.CoordinateArraySequence;
 
 @Slf4j
 @NoArgsConstructor

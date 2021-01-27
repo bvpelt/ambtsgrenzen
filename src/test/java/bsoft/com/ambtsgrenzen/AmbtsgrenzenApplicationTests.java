@@ -106,7 +106,7 @@ class AmbtsgrenzenApplicationTests {
         String bestuurlijkeGrensUri = "https://brk.basisregistraties.overheid.nl/api/bestuurlijke-grenzen/v2/bestuurlijke-gebieden?pageSize=10&type=territoriaal";
 
         log.info("LoadBestuurlijkeGrenzen - start load");
-        int page = 1;
+        int page = 39;
         String url = bestuurlijkeGrensUri + "&page=" + page;
         status = getNextPage(url);
         log.info("LoadBestuurlijkeGrenzen - load status: {} next: {}", status, next);
@@ -179,14 +179,31 @@ class AmbtsgrenzenApplicationTests {
     public void test04()
             throws IOException {
 
-        String json2 = "{\"geometrie\":{\"type\":\"Polygon\", \"coordinates\": [ [ [ 5.020295189, 52.025627264 ], [ 5.02031339, 52.025591421 ], [ 5.020295189, 52.025627264 ]]] }}";
-        String json3 = "{\"geometrie\":{\"type\":\"Point\", \"coordinates\": [ 5.020295189, 52.025627264 ] }}";
-        String json4 = "{\"type\":\"Point\", \"coordinates\": [ 5.020295189, 52.025627264 ] }";
-        log.info("Using json: {}", json3);
+        String json1 = "{\"type\":\"Point\", \"coordinates\": [ 5.020295189, 52.025627264 ] }";
+        String json2 = "{\"type\":\"Polygon\", \"coordinates\": [ [ [ 4.920473995, 52.51199197 ], [ 4.920918469, 52.511846438 ], [ 4.921632215, 52.511635283 ], [ 4.922294632, 52.511470433 ], [ 4.922600176, 52.511412716 ], [ 4.922752826, 52.511394709 ], " +
+                "[ 4.922869918, 52.511376563 ], [ 4.923007224, 52.511367798 ], [ 4.923439551, 52.511335379 ], [ 4.92403563, 52.511293676 ], [ 4.924523985, 52.511249061 ], [ 4.924686732, 52.511237292 ], [ 4.92485969, 52.511222462 ], " +
+                             "[ 4.933499277, 52.51152796 ], [ 4.933636485, 52.511551618 ], [ 4.933740609, 52.511566476 ], [ 4.93392049, 52.511587403 ], [ 4.934071987, 52.511605336 ], [ 4.934228152, 52.511629065 ], [ 4.93435125, 52.511641102 ], " +
+                "[ 4.934526255, 52.511676469 ], [ 4.934656807, 52.511705709 ], [ 4.934730232, 52.511722157 ], [ 4.935121721, 52.511750098 ], [ 4.935123428, 52.511750311 ], [ 4.935423949, 52.511787476 ], [ 4.935744338, 52.511823692 ], [ 4.920473995, 52.51199197 ]]]}";
+        String json3 = "{\"type\":\"MultiPolygon\", \"coordinates\": [ [ [ [ 4.896291159, 52.322420008 ], [ 4.896407232, 52.322321202 ], [ 4.897145627, 52.32189658 ], [ 4.898280097, 52.321644124 ], [ 4.899346526, 52.321550622 ], " +
+                "[ 4.90913474, 52.318253359 ], [ 4.909812283, 52.318261389 ], [ 4.910113857, 52.31826496 ], [ 4.910114165, 52.318264962 ], [ 4.910194761, 52.318265916 ], [ 4.91020397, 52.318266034 ], [ 4.910204616, 52.318266045 ], [ 4.896291159, 52.322420008 ] ] ], " +
+                " [ [ [ 4.943095538, 52.292475537 ], [ 4.943175128, 52.292383307 ], [ 4.943219957, 52.292331355 ], [ 4.943640956, 52.291843541 ], [ 4.944145993, 52.291258442 ], [ 4.946034025, 52.289070235 ], [ 4.946375344, 52.288674517 ], " +
+                "[ 4.954984417, 52.278626022 ], [ 4.954992888, 52.278615375 ], [ 4.955029113, 52.278569858 ], [ 4.955063202, 52.27852703 ], [ 4.955083258, 52.27850183 ], [ 4.955129971, 52.278443131 ], [ 4.955239684, 52.278305272 ], " +
+                "[ 4.955242491, 52.278305876 ], [ 4.955487832, 52.278361292 ], [ 4.955736145, 52.278418534 ], [ 4.955843181, 52.278446203 ], [ 4.955996291, 52.2784886 ], [ 4.956162764, 52.278535602 ], [ 4.956302479, 52.278575226 ], [ 4.943095538, 52.292475537 ] ] ] ]}";
 
         ObjectMapper mapper = new ObjectMapper();
         try {
-            mapper.reader().forType(Polygon.class).readValue(json3);
+            log.info("Using json: {}", json1);
+            Point point = mapper.reader().forType(Geometry.class).readValue(json1);
+            log.info("Geometry type: {} coordiantes: {}", point.getType(), point.getCoordinates());
+
+            log.info("Using json: {}", json2);
+            Polygon polygon = mapper.reader().forType(Geometry.class).readValue(json2);
+            log.info("Geometry type: {} coordiantes: {}", polygon.getType(), polygon.getCoordinates());
+
+            log.info("Using json: {}", json3);
+            MultiPolygon multiPolygon = mapper.reader().forType(Geometry.class).readValue(json3);
+            log.info("Geometry type: {} coordiantes: {}", multiPolygon.getType(), multiPolygon.getCoordinates());
+
         } catch (Exception e) {
             log.info("Got excpetion: {}", e);
         }

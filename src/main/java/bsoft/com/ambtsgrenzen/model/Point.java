@@ -1,27 +1,15 @@
 package bsoft.com.ambtsgrenzen.model;
 
+import com.fasterxml.jackson.annotation.JsonRawValue;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class Point extends Geometry {
-    private final double[] coordinates;
-    private final double[] bbox;
-
-    @JsonCreator
-    public Point(@JsonProperty("coordinates") double [] coordinates) {
-        super();
-        this.coordinates = coordinates;
-        this.bbox = null;
-    }
-
-    public double[] getCoordinates() {
-        return coordinates;
-    }
-
-    public double[] getBbox() {
-        return bbox;
-    }
+    private double [] coordinates;
 }

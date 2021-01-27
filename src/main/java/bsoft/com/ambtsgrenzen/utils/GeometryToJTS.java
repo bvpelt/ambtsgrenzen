@@ -4,33 +4,72 @@ import bsoft.com.ambtsgrenzen.model.Geometry;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.locationtech.jts.geom.*;
+import org.locationtech.jts.geom.impl.CoordinateArraySequence;
 
 @Slf4j
 @NoArgsConstructor
 
 public class GeometryToJTS {
 
-    private GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(), 28992);
+    private final GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(), 28992);
 
-    public org.locationtech.jts.geom.Geometry geometryToPolygon(Geometry geometry) {
+    public org.locationtech.jts.geom.Geometry geometryToGeo(Geometry geometry) {
         org.locationtech.jts.geom.Geometry geo = null;
 
+        if (geometry.getType().equals("Polygon")) {
+            geo = geometryToPolygon((bsoft.com.ambtsgrenzen.model.Polygon) geometry);
+        } else if (geometry.getType().equals("MultiPolygon")) {
+            geo = geometryToMultiPolygon((bsoft.com.ambtsgrenzen.model.MultiPolygon) geometry);
+        } else {
+            log.error("Unsupported type: {}", geometry.getType());
+        }
 
-        /*
+        return geo;
+    }
+
+    private Polygon geometryToPolygon(bsoft.com.ambtsgrenzen.model.Polygon geometry) {
+        Polygon polygon = null;
+
         double[][][] coords = geometry.getCoordinates();
-        log.info("Aantal polygonen: {}", coords.length);
+        polygon = getPolygon(coords);
+
+        return polygon;
+    }
+
+    private MultiPolygon geometryToMultiPolygon(bsoft.com.ambtsgrenzen.model.MultiPolygon geometry) {
+        MultiPolygon multiPolygon = null;
+        double[][][][] coords = geometry.getCoordinates();
+        int maxPolygons = coords.length;
+        log.info("Aantal polygonen: {}", maxPolygons);
+
+        Polygon[] polygons = new Polygon[maxPolygons];
+
+        for (int k = 0; k < maxPolygons; k++) {
+            polygons[k] = getPolygon(coords[k]);
+        }
+
+        multiPolygon = new MultiPolygon(polygons, geometryFactory);
+
+        return multiPolygon;
+    }
+
+    private Polygon getPolygon(double[][][] coords) {
+        Polygon polygon;
+        int maxRings = coords.length;
+        log.info("Number of rings: {}", maxRings);
+
         double[][] lines = null;
         LinearRing outline = null;
         LinearRing[] holes = null;
 
         // process outline and holes
         // outline is polygon 0 - all other polygons are holes
-        if (coords.length > 1) {
+        if (maxRings > 1) {
             log.info("Holes found!");
-            holes = new LinearRing[coords.length - 1];
+            holes = new LinearRing[maxRings - 1];
         }
 
-        for (int k = 0; k < coords.length; k++) {
+        for (int k = 0; k < maxRings; k++) {
             lines = coords[k];
             Coordinate[] coordinates = new Coordinate[coords[k].length];
             log.info("number of coordinates in polygon {}: {}", k, lines.length);
@@ -49,7 +88,8 @@ public class GeometryToJTS {
         }
 
         polygon = new Polygon(outline, holes, geometryFactory);
-*/
-        return geo;
+
+        return polygon;
     }
+
 }

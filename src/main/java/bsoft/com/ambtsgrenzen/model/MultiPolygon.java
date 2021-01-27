@@ -10,5 +10,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class MultiPolygon extends Geometry {
-    private double [][][][] coordinates;
+    private double[][][][] coordinates;
 }

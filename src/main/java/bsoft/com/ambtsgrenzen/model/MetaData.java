@@ -11,4 +11,6 @@ import lombok.Setter;
 @Setter
 public class MetaData {
     private String beginGeldigheid;
+
+    private String eindGeldigheid;
 }

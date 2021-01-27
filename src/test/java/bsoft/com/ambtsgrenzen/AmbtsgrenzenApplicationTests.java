@@ -43,7 +43,7 @@ class AmbtsgrenzenApplicationTests {
             j++;
             log.info("Element[{}] - identificatie: {}", i, bestuurlijkGebied[i].getIdentificatie());
             OpenbaarLichaam openbaarLichaam = bestuurlijkGebied[i].getEmbedded().getOpenbaarLichaam();
-            log.info("            -- openbaarlichaam - code: {} type: {} naam: {} link self: {}", openbaarLichaam.getCode(), openbaarLichaam.getType(), openbaarLichaam.getNaam(), openbaarLichaam.getLinks().getSelf().getHref());
+            log.info("            -- openbaarlichaam - code: {} type: {} naam: {} link self: {}", openbaarLichaam.getCode(), openbaarLichaam.getType(), openbaarLichaam.getName(), openbaarLichaam.getLinks().getSelf().getHref());
             MetaData metaData = bestuurlijkGebied[i].getEmbedded().getMetadata();
             log.info("            -- metadata - beginGeldigheid: {}", metaData.getBeginGeldigheid());
             SelfLink link = bestuurlijkGebied[i].getLinks();
@@ -60,7 +60,7 @@ class AmbtsgrenzenApplicationTests {
             bg.setDomein(bestuurlijkGebied[i].getDomein());
             bg.setType(bestuurlijkGebied[i].getType());
 
-            org.locationtech.jts.geom.Geometry geo = new GeometryToJTS().geometryToPolygon(geometry);
+            org.locationtech.jts.geom.Geometry geo = new GeometryToJTS().geometryToGeo(geometry);
             //Polygon polygon = new GeometryToJTS().geometryToPolygon(geometry);
 
             if (geo != null) {
@@ -81,7 +81,7 @@ class AmbtsgrenzenApplicationTests {
 
                 log.info("Element[{}] - identificatie: {}", j, bestuurlijkGebied[i].getIdentificatie());
                 OpenbaarLichaam openbaarLichaam = bestuurlijkGebied[i].getEmbedded().getOpenbaarLichaam();
-                log.info("            -- openbaarlichaam - code: {} type: {} naam: {} link self: {}", openbaarLichaam.getCode(), openbaarLichaam.getType(), openbaarLichaam.getNaam(), openbaarLichaam.getLinks().getSelf().getHref());
+                log.info("            -- openbaarlichaam - code: {} type: {} naam: {} link self: {}", openbaarLichaam.getCode(), openbaarLichaam.getType(), openbaarLichaam.getName(), openbaarLichaam.getLinks().getSelf().getHref());
                 MetaData metaData = bestuurlijkGebied[i].getEmbedded().getMetadata();
                 log.info("            -- metadata - beginGeldigheid: {}", metaData.getBeginGeldigheid());
                 SelfLink link = bestuurlijkGebied[i].getLinks();
@@ -110,7 +110,7 @@ class AmbtsgrenzenApplicationTests {
         String url = bestuurlijkeGrensUri + "&page=" + page;
         status = getNextPage(url);
         log.info("LoadBestuurlijkeGrenzen - load status: {} next: {}", status, next);
-        while (next != null && next.length() > 0) {
+        while (status == 0 && next != null && next.length() > 0) {
             page++;
             url = bestuurlijkeGrensUri + "&page=" + page;
             status = getNextPage(url);
@@ -137,7 +137,7 @@ class AmbtsgrenzenApplicationTests {
                 j++;
                 log.info("Element[{}] - identificatie: {}", i, bestuurlijkGebied[i].getIdentificatie());
                 OpenbaarLichaam openbaarLichaam = bestuurlijkGebied[i].getEmbedded().getOpenbaarLichaam();
-                log.info("            -- openbaarlichaam - code: {} type: {} naam: {} link self: {}", openbaarLichaam.getCode(), openbaarLichaam.getType(), openbaarLichaam.getNaam(), openbaarLichaam.getLinks().getSelf().getHref());
+                log.info("            -- openbaarlichaam - code: {} type: {} naam: {} link self: {}", openbaarLichaam.getCode(), openbaarLichaam.getType(), openbaarLichaam.getName(), openbaarLichaam.getLinks().getSelf().getHref());
                 MetaData metaData = bestuurlijkGebied[i].getEmbedded().getMetadata();
                 log.info("            -- metadata - beginGeldigheid: {}", metaData.getBeginGeldigheid());
                 SelfLink link = bestuurlijkGebied[i].getLinks();
@@ -154,7 +154,7 @@ class AmbtsgrenzenApplicationTests {
                 bg.setDomein(bestuurlijkGebied[i].getDomein());
                 bg.setType(bestuurlijkGebied[i].getType());
 
-                org.locationtech.jts.geom.Geometry geo = new GeometryToJTS().geometryToPolygon(geometry);
+                org.locationtech.jts.geom.Geometry geo = new GeometryToJTS().geometryToGeo(geometry);
                 //Polygon polygon = new GeometryToJTS().geometryToPolygon(geometry);
                 //log.info("Created polygon: {}", polygon.toText());
                 if (geo != null) {
@@ -167,7 +167,10 @@ class AmbtsgrenzenApplicationTests {
                 }
             }
 
-            next = response.getLinks().getNext().getHref();
+            next = response.getLinks().getNext() == null? "" : response.getLinks().getNext().getHref();
+            if (next == "") {
+                status = -1;
+            }
             log.info("LoadBestuurlijkeGrenzen - found next: {}", next);
         }
         log.info("LoadBestuurlijkeGrenzen - end   getNextPage");

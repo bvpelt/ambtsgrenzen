@@ -16,7 +16,7 @@ public class Feature extends GeoJSON {
 
     public Feature(
             @JsonProperty("geometry") Geometry geometry,
-            @JsonProperty("properties") Map<String,Object> properties) {
+            @JsonProperty("properties") Map<String, Object> properties) {
         this(null, geometry, properties);
     }
 
@@ -24,7 +24,7 @@ public class Feature extends GeoJSON {
     public Feature(
             @JsonProperty("id") Object id,
             @JsonProperty("geometry") Geometry geometry,
-            @JsonProperty("properties") Map<String,Object> properties) {
+            @JsonProperty("properties") Map<String, Object> properties) {
         super();
         this.id = id;
         this.geometry = geometry;

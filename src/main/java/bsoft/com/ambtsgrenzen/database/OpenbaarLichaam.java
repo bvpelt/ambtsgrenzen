@@ -13,6 +13,7 @@ public class OpenbaarLichaam {
     @Id
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name = "increment", strategy = "increment")
+    @Column(name = "ID")
     private Long Id;
 
     @Column(name = "CODE")
@@ -24,8 +25,8 @@ public class OpenbaarLichaam {
     @Column(name = "TYPE")
     private String type;
 
-    @Column(name = "NAAM")
-    private String naam;
+    @Column(name = "NAME")
+    private String name;
 
     @Column(name = "BESTUURSLAAG")
     private String bestuurslaag;

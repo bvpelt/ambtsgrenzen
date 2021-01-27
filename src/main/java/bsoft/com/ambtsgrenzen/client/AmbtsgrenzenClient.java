@@ -56,7 +56,7 @@ public class AmbtsgrenzenClient {
         HttpStatus httpStatus = ambtsgrenzenResponseResponseEntity.getStatusCode();
         if (httpStatus.is2xxSuccessful()) {
             ambtsgrenzenResponse = ambtsgrenzenResponseResponseEntity.getBody();
-            log.info("AmbtsgrenzenClient - getBestuurlijkeGrens response next: {}", ambtsgrenzenResponse.getLinks().getNext().getHref());
+            log.info("AmbtsgrenzenClient - getBestuurlijkeGrens response next: {}", ambtsgrenzenResponse.getLinks().getNext() == null ? "null" : ambtsgrenzenResponse.getLinks().getNext().getHref());
         } else {
             log.error("Http status: {} - {}", httpStatus.toString(), httpStatus.name());
         }

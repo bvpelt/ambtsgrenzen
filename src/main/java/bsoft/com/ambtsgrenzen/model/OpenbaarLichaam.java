@@ -18,5 +18,7 @@ public class OpenbaarLichaam {
 
     private String type;
 
-    private String naam;
+    @JsonProperty("naam")
+    private String name;
+
 }

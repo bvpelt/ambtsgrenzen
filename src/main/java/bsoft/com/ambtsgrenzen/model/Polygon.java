@@ -9,6 +9,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Polygon extends Geometry{
-    private double [][][] coordinates;
+public class Polygon extends Geometry {
+    private double[][][] coordinates;
 }

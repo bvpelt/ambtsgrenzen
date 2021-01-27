@@ -3,10 +3,8 @@ package bsoft.com.ambtsgrenzen.database;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 import org.locationtech.jts.geom.Geometry;
-import org.locationtech.jts.geom.Polygon;
 
 import javax.persistence.*;
-
 
 @Data
 @Entity(name = "BestuurlijkGebied")
@@ -26,6 +24,10 @@ public class BestuurlijkGebied {
 
     @Column(name = "TYPE")
     private String type;
+
+    @OneToOne(optional = false)
+    @JoinColumn(name = "OPENBAARLICHAAM_ID", referencedColumnName = "ID")
+    private OpenbaarLichaam openbaarLichaam;
 
     @Column(name = "GEOMETRY")
     private Geometry geometry;

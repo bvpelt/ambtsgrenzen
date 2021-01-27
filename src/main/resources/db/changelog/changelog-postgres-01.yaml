@@ -26,6 +26,9 @@ databaseChangeLog:
                   name: TYPE
                   type: varchar(128)
               - column:
+                  name: OPENBAARLICHAAM_ID
+                  type: BIGINT
+              - column:
                   name: GEOMETRY
                   type: geometry(GEOMETRY, 28992)
         - rollback:
@@ -58,11 +61,17 @@ databaseChangeLog:
                   name: TYPE
                   type: varchar(128)
               - column:
-                  name: NAAM
+                  name: NAME
                   type: varchar(128)
               - column:
-                  name: BESTUURSLAAG
+                  name: BEGINGELDIGHEID
                   type: varchar(128)
+              - column:
+                  name: EINDGELDIGHEID
+                  type: varchar(16)
+              - column:
+                  name: BESTUURSLAAG
+                  type: varchar(16)
               - column:
                   name: GEOMETRY
                   type: geometry(POLYGON, 28992)

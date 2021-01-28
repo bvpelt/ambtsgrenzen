@@ -39,6 +39,7 @@ When postgres starts:
 create extension postgis;
 create extension postgis_topology;
 ```
+A Postgis tutorial can be found on: https://www.postgis.net/workshops/postgis-intro/
 ### Create user
 As postgres user
 ```shell

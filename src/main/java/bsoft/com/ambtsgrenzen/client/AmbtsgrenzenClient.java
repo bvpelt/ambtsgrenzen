@@ -13,7 +13,7 @@ import org.springframework.web.client.RestTemplate;
 public class AmbtsgrenzenClient {
     private final String bestuurlijkeGrensUri = "https://brk.basisregistraties.overheid.nl/api/bestuurlijke-grenzen/v2/bestuurlijke-gebieden";
     private final String X_API_KEY = "9c760bd1-d89e-481b-a91c-851ce59a3f45";
-
+    private final String ACCEPT_CRS = "epsg:28992";
 
     public AmbtsgrenzenResponse getBestuurlijkeGrens() {
         log.info("AmbtsgrenzenClient - getBestuurlijkeGrens without parameters");
@@ -24,6 +24,7 @@ public class AmbtsgrenzenClient {
         HttpHeaders headers = new HttpHeaders();
         headers.add("ContentType", MediaType.APPLICATION_JSON_VALUE);
         headers.add("x-api-key", X_API_KEY);
+        headers.add("accept-crs", ACCEPT_CRS);
         HttpEntity<AmbtsgrenzenResponse> entity = new HttpEntity<AmbtsgrenzenResponse>(new AmbtsgrenzenResponse(), headers);
 
         ResponseEntity<AmbtsgrenzenResponse> ambtsgrenzenResponseResponseEntity = restTemplate.exchange(bestuurlijkeGrensUri, HttpMethod.GET, entity, AmbtsgrenzenResponse.class);
@@ -49,6 +50,7 @@ public class AmbtsgrenzenClient {
         HttpHeaders headers = new HttpHeaders();
         headers.add("ContentType", MediaType.APPLICATION_JSON_VALUE);
         headers.add("x-api-key", X_API_KEY);
+        headers.add("accept-crs", ACCEPT_CRS);
         HttpEntity<AmbtsgrenzenResponse> entity = new HttpEntity<AmbtsgrenzenResponse>(new AmbtsgrenzenResponse(), headers);
         AmbtsgrenzenResponse ambtsgrenzenResponse = null;
 

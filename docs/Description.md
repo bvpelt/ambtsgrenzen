@@ -66,6 +66,7 @@ See https://www.baeldung.com/hibernate-spatial for an example
 
 # References
 - Geo spation example https://mkyong.com/spring-boot/spring-boot-spring-data-jpa
+- https://postgis.net/workshops/postgis-intro/indexing.html
 - Hibernate spatial tutorial http://www.hibernatespatial.org/documentation/02-Tutorial/01-tutorial4/
 - https://docs.spring.io/spring-data/jpa/docs/1.5.0.RC1/reference/html/jpa.repositories.html
 - used as part of hibernate spatial https://locationtech.github.io/jts/javadoc/index.html

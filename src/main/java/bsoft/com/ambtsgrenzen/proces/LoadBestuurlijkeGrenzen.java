@@ -37,7 +37,7 @@ public class LoadBestuurlijkeGrenzen {
         String url = bestuurlijkeGrensUri + "&page=" + page;
         status = getNextPage(url);
         log.info("LoadBestuurlijkeGrenzen - load status: {} next: {}", status, next);
-        while (status == 0 && next != null || next.length() > 0) {
+        while (next != null && next.length() > 0) {
             page++;
             url = bestuurlijkeGrensUri + "&page=" + page;
             status = getNextPage(url);
@@ -46,55 +46,6 @@ public class LoadBestuurlijkeGrenzen {
         log.info("LoadBestuurlijkeGrenzen - end   load");
         return status;
     }
-
-    /*
-    private long getFirstPage() {
-        log.info("LoadBestuurlijkeGrenzen - start getFirstPage");
-        BestuurlijkGebied[] bestuurlijkGebied = client.getBestuurlijkeGrens().getEmbedded().getBestuurlijkeGebieden();
-        log.info("Aantal bestuurlijke grenzen: {}", bestuurlijkGebied.length);
-
-        int i = 0;
-        int j = 0;
-        for (i = 0; i < bestuurlijkGebied.length; i++) {
-            j++;
-            log.info("Element[{}] - identificatie: {}", i, bestuurlijkGebied[i].getIdentificatie());
-            OpenbaarLichaam openbaarLichaam = bestuurlijkGebied[i].getEmbedded().getOpenbaarLichaam();
-            log.info("            -- openbaarlichaam - code: {} type: {} naam: {} link self: {}", openbaarLichaam.getCode(), openbaarLichaam.getType(), openbaarLichaam.getName(), openbaarLichaam.getLinks().getSelf().getHref());
-            MetaData metaData = bestuurlijkGebied[i].getEmbedded().getMetadata();
-            log.info("            -- metadata - beginGeldigheid: {}", metaData.getBeginGeldigheid());
-            SelfLink link = bestuurlijkGebied[i].getLinks();
-            log.info("            - links self: {}", link.getSelf().getHref());
-            log.info("            - geometrie");
-            Geometry geometry = bestuurlijkGebied[i].getGeometrie();
-            log.info("                type: {}", geometry.getType());
-            // log.info("                coordinates: {}", geometry.getCoordinates());
-            log.info("            - domein: {}", bestuurlijkGebied[i].getDomein());
-            log.info("            - type: {}", bestuurlijkGebied[i].getType());
-
-            bsoft.com.ambtsgrenzen.database.BestuurlijkGebied bg = new bsoft.com.ambtsgrenzen.database.BestuurlijkGebied();
-            bg.setIdentificatie(bestuurlijkGebied[i].getIdentificatie());
-            bg.setDomein(bestuurlijkGebied[i].getDomein());
-            bg.setType(bestuurlijkGebied[i].getType());
-
-            org.locationtech.jts.geom.Geometry geo = new GeometryToJTS().geometryToGeo(geometry);
-            // Polygon polygon = new GeometryToJTS().geometryToPolygon(geometry);
-
-            if (geo != null) {
-                //log.info("Created polygon: {}", polygon.toText());
-                bg.setGeometry(geo);
-
-                //bestuurlijkGebiedRepository.save(bg);
-                if (persistBestuurlijkGebied(bg) > 0L) {
-                    status++;
-                }
-            }
-        }
-
-        next = client.getBestuurlijkeGrens().getLinks().getNext().getHref();
-        log.info("LoadBestuurlijkeGrenzen - end   getFirstPage");
-        return status;
-    }
-*/
 
     private long getNextPage(String url) {
         log.info("LoadBestuurlijkeGrenzen - start getNextPage");
@@ -147,10 +98,12 @@ public class LoadBestuurlijkeGrenzen {
             }
 
             next = response.getLinks().getNext() == null ? "" : response.getLinks().getNext().getHref();
-            if (next == "") {
-                status = -1;
-            }
+            //if (next == "") {
+            //    status = -1;
+            //}
             log.info("LoadBestuurlijkeGrenzen - found next: {}", next);
+        } else {
+            next = "";
         }
         log.info("LoadBestuurlijkeGrenzen - end   getNextPage");
         return status;

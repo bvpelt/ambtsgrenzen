@@ -1,0 +1,52 @@
+databaseChangeLog:
+  - changeSet:
+      id:  200
+      author:  bart
+      dbms: PostgreSQL
+      comment: Create bestuurlijkgebied identificatie index
+      changes:
+        - createIndex:
+            clustered:  true
+            columns:
+              - column:
+                  descending:  true
+                  name:  IDENTIFICATIE
+            indexName:  idx_identificatie
+            schemaName:  public
+            tableName:  BESTUURLIJKGEBIED
+            unique:  true
+
+  - changeSet:
+      id:  210
+      author:  bart
+      dbms: PostgreSQL
+      comment: Create bestuurlijkgebied openbaarlichaam index
+      changes:
+        - createIndex:
+            clustered:  true
+            columns:
+              - column:
+                  descending:  true
+                  name:  OPENBAARLICHAAM_ID
+            indexName:  idx_openbaarlichaam_id
+            schemaName:  public
+            tableName:  BESTUURLIJKGEBIED
+            unique:  true
+
+  - changeSet:
+      id:  220
+      author:  bart
+      dbms: PostgreSQL
+      comment: Create openbaarlichaam code index
+      changes:
+        - createIndex:
+            clustered:  true
+            columns:
+              - column:
+                  descending:  true
+                  name:  CODE
+            indexName:  idx_code
+            schemaName:  public
+            tableName:  OPENBAARLICHAAM
+            unique:  true
+

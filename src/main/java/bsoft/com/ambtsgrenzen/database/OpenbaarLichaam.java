@@ -5,6 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Objects;
 
 @Data
 @Entity(name = "OpenbaarLichaam")
@@ -14,7 +15,7 @@ public class OpenbaarLichaam {
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name = "increment", strategy = "increment")
     @Column(name = "ID")
-    private Long Id;
+    private Long id;
 
     @Column(name = "CODE")
     private String code;
@@ -33,4 +34,17 @@ public class OpenbaarLichaam {
 
     @Column(name = "BEGINGELDIGHEID")
     private Date beginGeldigheid;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OpenbaarLichaam that = (OpenbaarLichaam) o;
+        return Objects.equals(code, that.code) && Objects.equals(oin, that.oin) && Objects.equals(type, that.type) && Objects.equals(name, that.name) && Objects.equals(bestuurslaag, that.bestuurslaag) && Objects.equals(beginGeldigheid, that.beginGeldigheid);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(code, oin, type, name, bestuurslaag, beginGeldigheid);
+    }
 }

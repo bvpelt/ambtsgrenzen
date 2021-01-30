@@ -65,16 +65,16 @@ databaseChangeLog:
                   type: varchar(128)
               - column:
                   name: BEGINGELDIGHEID
-                  type: varchar(128)
+                  type: varchar(24)
               - column:
                   name: EINDGELDIGHEID
-                  type: varchar(16)
+                  type: varchar(24)
               - column:
                   name: BESTUURSLAAG
-                  type: varchar(16)
+                  type: varchar(64)
               - column:
                   name: GEOMETRY
-                  type: geometry(POLYGON, 28992)
+                  type: geometry(GEOMETRY, 28992)
         - rollback:
             dropTable:
               - tableName: OPENBAARLICHAAM

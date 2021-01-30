@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: 300
+      author: bart
+      dbms: PostgreSQL
+      comment: Create bestuurlijkgebied geo index
+      changes:
+        - sql:
+            comment: create geo index
+            dbms: PostgreSQL
+            endDelimiter: ;
+            splitStatements: true
+            stripComments: true
+            sql: CREATE INDEX idx_geometry ON BESTUURLIJKGEBIED USING gist (GEOMETRY);

@@ -2,17 +2,32 @@ package bsoft.com.ambtsgrenzen;
 
 import bsoft.com.ambtsgrenzen.client.AmbtsgrenzenClient;
 import bsoft.com.ambtsgrenzen.model.*;
+import bsoft.com.ambtsgrenzen.repository.BestuurlijkGebiedRepository;
+import bsoft.com.ambtsgrenzen.repository.OpenbaarLichaamRepository;
 import bsoft.com.ambtsgrenzen.utils.GeometryToJTS;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.util.Assert;
 
 import java.io.IOException;
 
 @Slf4j
 @SpringBootTest
 class AmbtsgrenzenApplicationTests {
+
+    private BestuurlijkGebiedRepository bestuurlijkGebiedRepository;
+    private OpenbaarLichaamRepository openbaarLichaamRepository;
+
+    @Autowired
+    public AmbtsgrenzenApplicationTests(final BestuurlijkGebiedRepository bestuurlijkGebiedRepository, final OpenbaarLichaamRepository openbaarLichaamRepository)
+    {
+        this.bestuurlijkGebiedRepository = bestuurlijkGebiedRepository;
+        this.openbaarLichaamRepository = openbaarLichaamRepository;
+        log.info("AmbtsgrenzenApplicationTests bestuurlijkGebiedRepository: {},  openbaarLichaamRepository: {}", bestuurlijkGebiedRepository, openbaarLichaamRepository);
+    }
 
     private String next = "";
 
@@ -211,4 +226,56 @@ class AmbtsgrenzenApplicationTests {
             log.info("Got excpetion: {}", e);
         }
     }
+
+    @Test
+    public void test05() {
+        bsoft.com.ambtsgrenzen.database.BestuurlijkGebied bestuurlijkGebied;
+        String identificatie = "GM0345";
+        bestuurlijkGebied = bestuurlijkGebiedRepository.findByIdentificatie(identificatie);
+        Assert.notNull(bestuurlijkGebied, "Bestuurlijkgebied expected, not found");
+        Assert.isTrue(identificatie.equals(bestuurlijkGebied.getIdentificatie()), "Bestuurlijkgebied not as expected");
+        log.info("Bestuurlijkgebied id: {}, identificatie: {}, domein: {}, type: {} ", bestuurlijkGebied.getId(), bestuurlijkGebied.getIdentificatie(), bestuurlijkGebied.getDomein(), bestuurlijkGebied.getType());
+    }
+
+    @Test
+    public void test06() {
+        bsoft.com.ambtsgrenzen.database.BestuurlijkGebied bestuurlijkGebied;
+        bsoft.com.ambtsgrenzen.database.OpenbaarLichaam openbaarLichaam;
+        String identificatie = "GM0345";
+        bestuurlijkGebied = bestuurlijkGebiedRepository.findByIdentificatie(identificatie);
+        Assert.notNull(bestuurlijkGebied, "Bestuurlijkgebied expected, not found");
+        Assert.isTrue(identificatie.equals(bestuurlijkGebied.getIdentificatie()), "Bestuurlijkgebied not as expected");
+        log.info("Bestuurlijkgebied id: {}, identificatie: {}, domein: {}, type: {} ", bestuurlijkGebied.getId(), bestuurlijkGebied.getIdentificatie(), bestuurlijkGebied.getDomein(), bestuurlijkGebied.getType());
+
+        openbaarLichaam = openbaarLichaamRepository.findByCode(bestuurlijkGebied.getIdentificatie());
+        Assert.notNull(openbaarLichaam, "Bestuurlijkgebied expected, not found");
+        Assert.isTrue(bestuurlijkGebied.getIdentificatie().equals(openbaarLichaam.getCode()), "OpenbaarLichaam not as expected");
+        log.info("OpenbaarLichaam id: {}, code: {}, oin: {}, type: {}, name: {}, bestuurslaag: {}, beginGeldigheid: {} ", openbaarLichaam.getId(), openbaarLichaam.getCode(), openbaarLichaam.getOin(), openbaarLichaam.getType(), openbaarLichaam.getName(), openbaarLichaam.getBestuurslaag(), openbaarLichaam.getBeginGeldigheid());
+    }
+
+    @Test
+    public void test07() {
+        bsoft.com.ambtsgrenzen.database.BestuurlijkGebied bestuurlijkGebied;
+        bsoft.com.ambtsgrenzen.database.BestuurlijkGebied bestuurlijkGebiedCopie;
+        bsoft.com.ambtsgrenzen.database.OpenbaarLichaam openbaarLichaam;
+        String identificatie = "GM0345";
+        bestuurlijkGebied = bestuurlijkGebiedRepository.findByIdentificatie(identificatie);
+        bestuurlijkGebiedCopie = new bsoft.com.ambtsgrenzen.database.BestuurlijkGebied();
+        bestuurlijkGebiedCopie.setId(bestuurlijkGebied.getId());
+        bestuurlijkGebiedCopie.setIdentificatie(bestuurlijkGebied.getIdentificatie());
+        bestuurlijkGebiedCopie.setOpenbaarLichaam(bestuurlijkGebied.getOpenbaarLichaam());
+        bestuurlijkGebiedCopie.setGeometry(bestuurlijkGebied.getGeometry());
+        bestuurlijkGebiedCopie.setDomein(bestuurlijkGebied.getDomein());
+        bestuurlijkGebiedCopie.setType(bestuurlijkGebied.getType());
+
+
+        Assert.isTrue(bestuurlijkGebiedCopie.equals(bestuurlijkGebied), "Bestuurlijkgebied copie not equal to bestuurlijkgebied");
+        Assert.isTrue(bestuurlijkGebied.equals(bestuurlijkGebiedCopie), "Bestuurlijkgebied not equal to bestuurlijkgebied copie");
+        log.info("Bestuurlijkgebied and copie are equal id: {}, identificatie: {}, domein: {}, type: {} ", bestuurlijkGebied.getId(), bestuurlijkGebied.getIdentificatie(), bestuurlijkGebied.getDomein(), bestuurlijkGebied.getType());
+
+        bestuurlijkGebiedCopie.setId(null);
+        Assert.isTrue(bestuurlijkGebiedCopie.equals(bestuurlijkGebied), "Bestuurlijkgebied copie not equal to bestuurlijkgebied");
+        Assert.isTrue(bestuurlijkGebied.equals(bestuurlijkGebiedCopie), "Bestuurlijkgebied not equal to bestuurlijkgebied copie");
+        log.info("Bestuurlijkgebied and copie (after id=null on copy) are equal id: {}, identificatie: {}, domein: {}, type: {} ", bestuurlijkGebied.getId(), bestuurlijkGebied.getIdentificatie(), bestuurlijkGebied.getDomein(), bestuurlijkGebied.getType());
+        }
 }

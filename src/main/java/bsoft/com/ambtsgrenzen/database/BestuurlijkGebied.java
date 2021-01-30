@@ -5,6 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.locationtech.jts.geom.Geometry;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Data
 @Entity(name = "BestuurlijkGebied")
@@ -31,4 +32,17 @@ public class BestuurlijkGebied {
 
     @Column(name = "GEOMETRY")
     private Geometry geometry;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BestuurlijkGebied that = (BestuurlijkGebied) o;
+        return Objects.equals(identificatie, that.identificatie) && Objects.equals(domein, that.domein) && Objects.equals(type, that.type) && Objects.equals(openbaarLichaam, that.openbaarLichaam) && Objects.equals(geometry, that.geometry);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(identificatie, domein, type, openbaarLichaam, geometry);
+    }
 }

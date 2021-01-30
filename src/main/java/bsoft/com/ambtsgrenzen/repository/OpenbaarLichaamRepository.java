@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface OpenbaarLichaamRepository extends JpaRepository<OpenbaarLichaam, Long> {
+    OpenbaarLichaam findByCode(final String code);
 }

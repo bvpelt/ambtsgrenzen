@@ -17,7 +17,10 @@ import javax.transaction.Transactional;
 @Service
 public class LoadBestuurlijkeGrenzen {
 
-    private final String bestuurlijkeGrensUri = "https://brk.basisregistraties.overheid.nl/api/bestuurlijke-grenzen/v2/bestuurlijke-gebieden?pageSize=10&type=territoriaal";
+    private final String scheme = "https";
+    private final String host = "brk.basisregistraties.overheid.nl";
+    private final String path = "/api/bestuurlijke-grenzen/v2";
+    private final String bestuurlijkeGrensUri = scheme + "://" + host + path + "/bestuurlijke-gebieden?pageSize=10&type=territoriaal";
     private BestuurlijkGebiedRepository bestuurlijkGebiedRepository = null;
     private OpenbaarLichaamRepository openbaarLichaamRepository = null;
     private long status = 0L;
@@ -50,15 +53,15 @@ public class LoadBestuurlijkeGrenzen {
     private long getNextPage(String url) {
         log.info("LoadBestuurlijkeGrenzen - start getNextPage");
 
-        AmbtsgrenzenResponse response = client.getBestuurlijkeGrens(url);
+        BestuurlijkeGrenzenResponse response = client.getBestuurlijkeGrens(url);
         if (response != null) {
             BestuurlijkGebied[] bestuurlijkGebied = response.getEmbedded().getBestuurlijkeGebieden();
             log.info("Aantal bestuurlijke grenzen: {}", bestuurlijkGebied.length);
 
             int i = 0;
-            int j = 0;
+            //int j = 0;
             for (i = 0; i < bestuurlijkGebied.length; i++) {
-                j++;
+              //  j++;
                 log.info("Element[{}] - identificatie: {}", i, bestuurlijkGebied[i].getIdentificatie());
                 OpenbaarLichaam openbaarLichaam = bestuurlijkGebied[i].getEmbedded().getOpenbaarLichaam();
                 log.info("            -- openbaarlichaam - code: {} type: {} naam: {} link self: {}", openbaarLichaam.getCode(), openbaarLichaam.getType(), openbaarLichaam.getName(), openbaarLichaam.getLinks().getSelf().getHref());
@@ -84,13 +87,11 @@ public class LoadBestuurlijkeGrenzen {
                 ol.setType(openbaarLichaam.getType());
 
                 org.locationtech.jts.geom.Geometry geo = new GeometryToJTS().geometryToGeo(geometry);
-                //Polygon polygon = new GeometryToJTS().geometryToPolygon(geometry);
 
                 if (geo != null) {
                     //log.info("Created polygon: {}", polygon.toText());
                     bg.setGeometry(geo);
 
-                    //bestuurlijkGebiedRepository.save(bg);
                     if (persistBestuurlijkGebied(bg, ol) > 0L) {
                         status++;
                     }
@@ -98,9 +99,7 @@ public class LoadBestuurlijkeGrenzen {
             }
 
             next = response.getLinks().getNext() == null ? "" : response.getLinks().getNext().getHref();
-            //if (next == "") {
-            //    status = -1;
-            //}
+
             log.info("LoadBestuurlijkeGrenzen - found next: {}", next);
         } else {
             next = "";

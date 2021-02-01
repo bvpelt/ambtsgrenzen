@@ -10,18 +10,11 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class OpenbaarLichaam {
-    private String code;
-
-    private String oin;
+public class BestuurlijkeGrenzenResponse {
+    @JsonProperty("_embedded")
+    private BestuurlijkeGrenzen embedded;
 
     @JsonProperty("_links")
-    private SelfLink links;
+    private HalLinks links;
 
-    private String type;
-
-    @JsonProperty("naam")
-    private String name;
-
-    private String bestuurslaag;
 }

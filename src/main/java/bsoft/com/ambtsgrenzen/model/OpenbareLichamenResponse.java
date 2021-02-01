@@ -10,11 +10,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class AmbtsgrenzenResponse {
+public class OpenbareLichamenResponse {
     @JsonProperty("_embedded")
-    private Ambtsgrenzen embedded;
+    private OpenbareLichamen embedded;
 
     @JsonProperty("_links")
     private HalLinks links;
-
 }

@@ -1,6 +1,5 @@
 package bsoft.com.ambtsgrenzen.model;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,6 +9,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Ambtsgrenzen {
-    private BestuurlijkGebied[] bestuurlijkeGebieden;
+public class OpenbareLichamen {
+    OpenbaarLichaam[] openbareLichamen;
 }

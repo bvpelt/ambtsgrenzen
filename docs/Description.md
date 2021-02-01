@@ -7,6 +7,10 @@ Start application
 mvn spring-boot:run
 ```
 
+### Endpoints
+- http://localhost:8080/bestuurlijkegebieden (re)load all bestuurlijkegebieden
+- http://localhost:8080/openbarelichamen (re)load all openbarelichamen
+
 ### Show dependencies
 See https://javadeveloperzone.com/maven/maven-show-dependency-tree/
 ```bash

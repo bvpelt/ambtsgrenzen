@@ -16,13 +16,13 @@ import java.io.IOException;
 
 @Slf4j
 @SpringBootTest
-class AmbtsgrenzenApplicationTests {
+class BestuurlijkeGrenzenApplicationTests {
 
     private BestuurlijkGebiedRepository bestuurlijkGebiedRepository;
     private OpenbaarLichaamRepository openbaarLichaamRepository;
 
     @Autowired
-    public AmbtsgrenzenApplicationTests(final BestuurlijkGebiedRepository bestuurlijkGebiedRepository, final OpenbaarLichaamRepository openbaarLichaamRepository)
+    public BestuurlijkeGrenzenApplicationTests(final BestuurlijkGebiedRepository bestuurlijkGebiedRepository, final OpenbaarLichaamRepository openbaarLichaamRepository)
     {
         this.bestuurlijkGebiedRepository = bestuurlijkGebiedRepository;
         this.openbaarLichaamRepository = openbaarLichaamRepository;
@@ -141,7 +141,7 @@ class AmbtsgrenzenApplicationTests {
         AmbtsgrenzenClient client = new AmbtsgrenzenClient();
         long status = 0;
 
-        AmbtsgrenzenResponse response = client.getBestuurlijkeGrens(url);
+        BestuurlijkeGrenzenResponse response = client.getBestuurlijkeGrens(url);
         if (response != null) {
             BestuurlijkGebied[] bestuurlijkGebied = response.getEmbedded().getBestuurlijkeGebieden();
             log.info("Aantal bestuurlijke grenzen: {}", bestuurlijkGebied.length);

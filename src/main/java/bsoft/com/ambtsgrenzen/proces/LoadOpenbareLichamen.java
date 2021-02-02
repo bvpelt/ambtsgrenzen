@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 @NoArgsConstructor
 @Slf4j
@@ -99,39 +100,41 @@ public class LoadOpenbareLichamen {
     public long persistOpenbaarLichaam(bsoft.com.ambtsgrenzen.database.OpenbaarLichaam openbaarLichaam) {
         bsoft.com.ambtsgrenzen.database.OpenbaarLichaam ol = null;
         long result = 0L;
-        bsoft.com.ambtsgrenzen.database.OpenbaarLichaam existingOpenbaarLichaam = openbaarLichaamRepository.findByCode(openbaarLichaam.getCode());
-        if (existingOpenbaarLichaam == null) {
-            log.info("LoadOpenbareLichamen - persistOpenbaarLichaam not found code: {} insert", openbaarLichaam.getCode());
+        Optional<bsoft.com.ambtsgrenzen.database.OpenbaarLichaam> existingOpenbaarLichaam = openbaarLichaamRepository.findByCode(openbaarLichaam.getCode());
+
+        if (existingOpenbaarLichaam.isEmpty()) {
             ol = openbaarLichaamRepository.save(openbaarLichaam);
             result = ol.getId();
+            log.info("LoadOpenbareLichamen - new openbaarlichaam id: {}, code: {}", ol.getId(), ol.getCode());
         } else {
+            bsoft.com.ambtsgrenzen.database.OpenbaarLichaam exOl = existingOpenbaarLichaam.get();
             log.info("LoadOpenbareLichamen - persistOpenbaarLichaam found code: {} update", openbaarLichaam.getCode());
-            if (!openbaarLichaam.equals(existingOpenbaarLichaam)) {
-                if (!existingOpenbaarLichaam.getOin().equals(openbaarLichaam.getOin())) {
-                    existingOpenbaarLichaam.setOin(openbaarLichaam.getOin());
+            if (!openbaarLichaam.equals(exOl)) {
+                if ((exOl.getOin() != null ) && !exOl.getOin().equals(openbaarLichaam.getOin())) {
+                    exOl.setOin(openbaarLichaam.getOin());
                 }
 
-                if (!existingOpenbaarLichaam.getType().equals(openbaarLichaam.getType())) {
-                    existingOpenbaarLichaam.setType(openbaarLichaam.getType());
+                if ((exOl.getType() != null) && !exOl.getType().equals(openbaarLichaam.getType())) {
+                    exOl.setType(openbaarLichaam.getType());
                 }
 
-                if (!existingOpenbaarLichaam.getName().equals(openbaarLichaam.getName())) {
-                    existingOpenbaarLichaam.setName(openbaarLichaam.getName());
+                if ((exOl.getName() != null) && !exOl.getName().equals(openbaarLichaam.getName())) {
+                    exOl.setName(openbaarLichaam.getName());
                 }
 
-                if (!existingOpenbaarLichaam.getBestuurslaag().equals(openbaarLichaam.getBestuurslaag())) {
-                    existingOpenbaarLichaam.setBestuurslaag(openbaarLichaam.getBestuurslaag());
+                if ((exOl.getBestuurslaag() != null) && !exOl.getBestuurslaag().equals(openbaarLichaam.getBestuurslaag())) {
+                    exOl.setBestuurslaag(openbaarLichaam.getBestuurslaag());
                 }
 
-                if (!existingOpenbaarLichaam.getBeginGeldigheid().equals(openbaarLichaam.getBeginGeldigheid())) {
-                    existingOpenbaarLichaam.setBeginGeldigheid(openbaarLichaam.getBeginGeldigheid());
+                if ((exOl.getBeginGeldigheid() != null) && !exOl.getBeginGeldigheid().equals(openbaarLichaam.getBeginGeldigheid())) {
+                    exOl.setBeginGeldigheid(openbaarLichaam.getBeginGeldigheid());
                 }
 
-                log.info("LoadOpenbareLichamen - save exisiting id: {} code: {}, type: {}, name: {}", existingOpenbaarLichaam.getId(), existingOpenbaarLichaam.getCode(), existingOpenbaarLichaam.getType(), existingOpenbaarLichaam.getName());
-                ol = openbaarLichaamRepository.save(existingOpenbaarLichaam);
+                log.info("LoadOpenbareLichamen - changed openbaarlichaam id: {} code: {}", exOl.getId(), exOl.getCode());
+                ol = openbaarLichaamRepository.save(exOl);
                 result = ol.getId();
             } else {
-                log.info("LoadOpenbareLichamen - persistOpenbaarLichaam found code: {} no changes", openbaarLichaam.getCode());
+                log.info("LoadOpenbareLichamen - no changes for openbaarlichaar id: {}, code: {}", openbaarLichaam.getId(), openbaarLichaam.getCode());
             }
         }
 

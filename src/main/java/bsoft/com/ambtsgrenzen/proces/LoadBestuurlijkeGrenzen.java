@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 @NoArgsConstructor
 @Slf4j
@@ -122,56 +123,61 @@ public class LoadBestuurlijkeGrenzen {
         bsoft.com.ambtsgrenzen.database.BestuurlijkGebied bg = null;
         bsoft.com.ambtsgrenzen.database.BestuurlijkGebied result = null;
 
-        bsoft.com.ambtsgrenzen.database.OpenbaarLichaam existingOpenbaarLichaam = openbaarLichaamRepository.findByCode(openbaarLichaam.getCode());
-        if (existingOpenbaarLichaam == null) {
+        Optional<bsoft.com.ambtsgrenzen.database.OpenbaarLichaam> existingOpenbaarLichaam = openbaarLichaamRepository.findByCode(openbaarLichaam.getCode());
+        if (existingOpenbaarLichaam.isEmpty()) {
             ol = openbaarLichaamRepository.save(openbaarLichaam);
         } else {
-            if (!openbaarLichaam.equals(existingOpenbaarLichaam)) {
-                if (!existingOpenbaarLichaam.getOin().equals(openbaarLichaam.getOin())) {
-                    existingOpenbaarLichaam.setOin(openbaarLichaam.getOin());
+            bsoft.com.ambtsgrenzen.database.OpenbaarLichaam exOl = existingOpenbaarLichaam.get();
+            if (!openbaarLichaam.equals(exOl)) {
+                if ((exOl.getOin() != null) && !exOl.getOin().equals(openbaarLichaam.getOin())) {
+                    exOl.setOin(openbaarLichaam.getOin());
                 }
 
-                if (!existingOpenbaarLichaam.getType().equals(openbaarLichaam.getType())) {
-                    existingOpenbaarLichaam.setType(openbaarLichaam.getType());
+                if ((exOl.getType() != null) && !exOl.getType().equals(openbaarLichaam.getType())) {
+                    exOl.setType(openbaarLichaam.getType());
                 }
 
-                if (!existingOpenbaarLichaam.getName().equals(openbaarLichaam.getName())) {
-                    existingOpenbaarLichaam.setName(openbaarLichaam.getName());
+                if ((exOl.getName() != null) && !exOl.getName().equals(openbaarLichaam.getName())) {
+                    exOl.setName(openbaarLichaam.getName());
                 }
 
-                if (!existingOpenbaarLichaam.getBestuurslaag().equals(openbaarLichaam.getBestuurslaag())) {
-                    existingOpenbaarLichaam.setBestuurslaag(openbaarLichaam.getBestuurslaag());
+                if ((exOl.getBestuurslaag() != null) && !exOl.getBestuurslaag().equals(openbaarLichaam.getBestuurslaag())) {
+                    exOl.setBestuurslaag(openbaarLichaam.getBestuurslaag());
                 }
 
-                if (!existingOpenbaarLichaam.getBeginGeldigheid().equals(openbaarLichaam.getBeginGeldigheid())) {
-                    existingOpenbaarLichaam.setBeginGeldigheid(openbaarLichaam.getBeginGeldigheid());
+                if ((exOl.getBeginGeldigheid() != null) && !exOl.getBeginGeldigheid().equals(openbaarLichaam.getBeginGeldigheid())) {
+                    exOl.setBeginGeldigheid(openbaarLichaam.getBeginGeldigheid());
                 }
             }
-            ol = openbaarLichaamRepository.save(existingOpenbaarLichaam);
+            ol = openbaarLichaamRepository.save(exOl);
         }
 
-        bsoft.com.ambtsgrenzen.database.BestuurlijkGebied existingBestuurlijkGebied = bestuurlijkGebiedRepository.findByIdentificatie(bestuurlijkGebied.getIdentificatie());
-        if (existingBestuurlijkGebied == null) {
+        Optional<bsoft.com.ambtsgrenzen.database.BestuurlijkGebied> existingBestuurlijkGebied = bestuurlijkGebiedRepository.findByIdentificatie(bestuurlijkGebied.getIdentificatie());
+        if (existingBestuurlijkGebied.isEmpty()) {
             bestuurlijkGebied.setOpenbaarLichaam(ol);
             result = bestuurlijkGebiedRepository.save(bestuurlijkGebied);
+            log.info ("New bestuurlijkgebied id: {}, identificatie: {}", result.getId(), result.getIdentificatie());
         } else {
-            if (!bestuurlijkGebied.equals(existingBestuurlijkGebied)) {
-                if (!existingBestuurlijkGebied.getGeometry().equals(bestuurlijkGebied.getGeometry())) {
-                    existingBestuurlijkGebied.setGeometry(bestuurlijkGebied.getGeometry());
+            bsoft.com.ambtsgrenzen.database.BestuurlijkGebied exBe = existingBestuurlijkGebied.get();
+            if (!bestuurlijkGebied.equals(exBe)) {
+                if ((exBe.getGeometry() != null) && !exBe.getGeometry().equals(bestuurlijkGebied.getGeometry())) {
+                    exBe.setGeometry(bestuurlijkGebied.getGeometry());
                 }
-                if (!existingBestuurlijkGebied.getDomein().equals(bestuurlijkGebied.getDomein())) {
-                    existingBestuurlijkGebied.setDomein(bestuurlijkGebied.getDomein());
+                if ((exBe.getDomein() != null) && !exBe.getDomein().equals(bestuurlijkGebied.getDomein())) {
+                    exBe.setDomein(bestuurlijkGebied.getDomein());
                 }
 
-                if (!existingBestuurlijkGebied.getType().equals(bestuurlijkGebied.getType())) {
-                    existingBestuurlijkGebied.setType(bestuurlijkGebied.getType());
+                if ((exBe.getType() != null) && !exBe.getType().equals(bestuurlijkGebied.getType())) {
+                    exBe.setType(bestuurlijkGebied.getType());
                 }
+                exBe.setOpenbaarLichaam(ol);
+                result = bestuurlijkGebiedRepository.save(exBe);
+                log.info ("Changed bestuurlijkgebied id: {}, identificatie: {}", exBe.getId(), exBe.getIdentificatie());
+            } else {
+                log.info ("No change for bestuurlijkgebied id: {}, identificatie: {}", exBe.getId(), exBe.getIdentificatie());
             }
-
-            existingBestuurlijkGebied.setOpenbaarLichaam(ol);
-            result = bestuurlijkGebiedRepository.save(existingBestuurlijkGebied);
         }
 
-        return result.getId();
+        return result == null ? 0L : result.getId();
     }
 }

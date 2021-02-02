@@ -62,7 +62,7 @@ public class LoadBestuurlijkeGrenzen {
             int i = 0;
             //int j = 0;
             for (i = 0; i < bestuurlijkGebied.length; i++) {
-              //  j++;
+                //  j++;
                 log.info("Element[{}] - identificatie: {}", i, bestuurlijkGebied[i].getIdentificatie());
                 OpenbaarLichaam openbaarLichaam = bestuurlijkGebied[i].getEmbedded().getOpenbaarLichaam();
                 log.info("            -- openbaarlichaam - code: {} type: {} naam: {} link self: {}", openbaarLichaam.getCode(), openbaarLichaam.getType(), openbaarLichaam.getName(), openbaarLichaam.getLinks().getSelf().getHref());
@@ -129,25 +129,11 @@ public class LoadBestuurlijkeGrenzen {
         } else {
             bsoft.com.ambtsgrenzen.database.OpenbaarLichaam exOl = existingOpenbaarLichaam.get();
             if (!openbaarLichaam.equals(exOl)) {
-                if ((exOl.getOin() != null) && !exOl.getOin().equals(openbaarLichaam.getOin())) {
-                    exOl.setOin(openbaarLichaam.getOin());
-                }
-
-                if ((exOl.getType() != null) && !exOl.getType().equals(openbaarLichaam.getType())) {
-                    exOl.setType(openbaarLichaam.getType());
-                }
-
-                if ((exOl.getName() != null) && !exOl.getName().equals(openbaarLichaam.getName())) {
-                    exOl.setName(openbaarLichaam.getName());
-                }
-
-                if ((exOl.getBestuurslaag() != null) && !exOl.getBestuurslaag().equals(openbaarLichaam.getBestuurslaag())) {
-                    exOl.setBestuurslaag(openbaarLichaam.getBestuurslaag());
-                }
-
-                if ((exOl.getBeginGeldigheid() != null) && !exOl.getBeginGeldigheid().equals(openbaarLichaam.getBeginGeldigheid())) {
-                    exOl.setBeginGeldigheid(openbaarLichaam.getBeginGeldigheid());
-                }
+                exOl.setOin(openbaarLichaam.getOin());
+                exOl.setType(openbaarLichaam.getType());
+                exOl.setName(openbaarLichaam.getName());
+                exOl.setBestuurslaag(openbaarLichaam.getBestuurslaag());
+                exOl.setBeginGeldigheid(openbaarLichaam.getBeginGeldigheid());
             }
             ol = openbaarLichaamRepository.save(exOl);
         }
@@ -156,25 +142,18 @@ public class LoadBestuurlijkeGrenzen {
         if (existingBestuurlijkGebied.isEmpty()) {
             bestuurlijkGebied.setOpenbaarLichaam(ol);
             result = bestuurlijkGebiedRepository.save(bestuurlijkGebied);
-            log.info ("New bestuurlijkgebied id: {}, identificatie: {}", result.getId(), result.getIdentificatie());
+            log.info("New bestuurlijkgebied id: {}, identificatie: {}", result.getId(), result.getIdentificatie());
         } else {
             bsoft.com.ambtsgrenzen.database.BestuurlijkGebied exBe = existingBestuurlijkGebied.get();
             if (!bestuurlijkGebied.equals(exBe)) {
-                if ((exBe.getGeometry() != null) && !exBe.getGeometry().equals(bestuurlijkGebied.getGeometry())) {
-                    exBe.setGeometry(bestuurlijkGebied.getGeometry());
-                }
-                if ((exBe.getDomein() != null) && !exBe.getDomein().equals(bestuurlijkGebied.getDomein())) {
-                    exBe.setDomein(bestuurlijkGebied.getDomein());
-                }
-
-                if ((exBe.getType() != null) && !exBe.getType().equals(bestuurlijkGebied.getType())) {
-                    exBe.setType(bestuurlijkGebied.getType());
-                }
+                exBe.setGeometry(bestuurlijkGebied.getGeometry());
+                exBe.setDomein(bestuurlijkGebied.getDomein());
+                exBe.setType(bestuurlijkGebied.getType());
                 exBe.setOpenbaarLichaam(ol);
                 result = bestuurlijkGebiedRepository.save(exBe);
-                log.info ("Changed bestuurlijkgebied id: {}, identificatie: {}", exBe.getId(), exBe.getIdentificatie());
+                log.info("Changed bestuurlijkgebied id: {}, identificatie: {}", exBe.getId(), exBe.getIdentificatie());
             } else {
-                log.info ("No change for bestuurlijkgebied id: {}, identificatie: {}", exBe.getId(), exBe.getIdentificatie());
+                log.info("No change for bestuurlijkgebied id: {}, identificatie: {}", exBe.getId(), exBe.getIdentificatie());
             }
         }
 

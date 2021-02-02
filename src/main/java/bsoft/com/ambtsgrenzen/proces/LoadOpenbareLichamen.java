@@ -1,10 +1,9 @@
 package bsoft.com.ambtsgrenzen.proces;
 
 import bsoft.com.ambtsgrenzen.client.AmbtsgrenzenClient;
-import bsoft.com.ambtsgrenzen.model.*;
-import bsoft.com.ambtsgrenzen.repository.BestuurlijkGebiedRepository;
+import bsoft.com.ambtsgrenzen.model.OpenbaarLichaam;
+import bsoft.com.ambtsgrenzen.model.OpenbareLichamenResponse;
 import bsoft.com.ambtsgrenzen.repository.OpenbaarLichaamRepository;
-import bsoft.com.ambtsgrenzen.utils.GeometryToJTS;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,20 +50,19 @@ public class LoadOpenbareLichamen {
     }
 
 
-
     private long getNextPage(String url) {
         log.info("LoadOpenbareLichamen - start getNextPage");
 
         OpenbareLichamenResponse response = client.getOpenbareLichamen(url);
         if (response != null) {
-           OpenbaarLichaam[] openbareLichamen = response.getEmbedded().getOpenbareLichamen();
+            OpenbaarLichaam[] openbareLichamen = response.getEmbedded().getOpenbareLichamen();
             log.info("Aantal openbare lichamen: {}", openbareLichamen.length);
 
             int i = 0;
             for (i = 0; i < openbareLichamen.length; i++) {
                 log.info("Element[{}] - code: {}", i, openbareLichamen[i].getCode());
                 OpenbaarLichaam openbaarLichaam = openbareLichamen[i];
-                log.info(" -- openbaarlichaam - code: {} type: {} naam: {} link self: {}", openbaarLichaam.getCode(), openbaarLichaam.getType(), openbaarLichaam.getName(), openbaarLichaam.getLinks().getSelf().getHref());
+                log.info(" -- openbaarlichaam - code: {} oin: {} type: {} naam: {} link self: {}", openbaarLichaam.getCode(), openbaarLichaam.getOin(), openbaarLichaam.getType(), openbaarLichaam.getName(), openbaarLichaam.getLinks().getSelf().getHref());
 
                 bsoft.com.ambtsgrenzen.database.OpenbaarLichaam ol = new bsoft.com.ambtsgrenzen.database.OpenbaarLichaam();
                 ol.setCode(openbaarLichaam.getCode());
@@ -110,25 +108,11 @@ public class LoadOpenbareLichamen {
             bsoft.com.ambtsgrenzen.database.OpenbaarLichaam exOl = existingOpenbaarLichaam.get();
             log.info("LoadOpenbareLichamen - persistOpenbaarLichaam found code: {} update", openbaarLichaam.getCode());
             if (!openbaarLichaam.equals(exOl)) {
-                if ((exOl.getOin() != null ) && !exOl.getOin().equals(openbaarLichaam.getOin())) {
-                    exOl.setOin(openbaarLichaam.getOin());
-                }
-
-                if ((exOl.getType() != null) && !exOl.getType().equals(openbaarLichaam.getType())) {
-                    exOl.setType(openbaarLichaam.getType());
-                }
-
-                if ((exOl.getName() != null) && !exOl.getName().equals(openbaarLichaam.getName())) {
-                    exOl.setName(openbaarLichaam.getName());
-                }
-
-                if ((exOl.getBestuurslaag() != null) && !exOl.getBestuurslaag().equals(openbaarLichaam.getBestuurslaag())) {
-                    exOl.setBestuurslaag(openbaarLichaam.getBestuurslaag());
-                }
-
-                if ((exOl.getBeginGeldigheid() != null) && !exOl.getBeginGeldigheid().equals(openbaarLichaam.getBeginGeldigheid())) {
-                    exOl.setBeginGeldigheid(openbaarLichaam.getBeginGeldigheid());
-                }
+                exOl.setOin(openbaarLichaam.getOin());
+                exOl.setType(openbaarLichaam.getType());
+                exOl.setName(openbaarLichaam.getName());
+                exOl.setBestuurslaag(openbaarLichaam.getBestuurslaag());
+                exOl.setBeginGeldigheid(openbaarLichaam.getBeginGeldigheid());
 
                 log.info("LoadOpenbareLichamen - changed openbaarlichaam id: {} code: {}", exOl.getId(), exOl.getCode());
                 ol = openbaarLichaamRepository.save(exOl);

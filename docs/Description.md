@@ -92,3 +92,5 @@ See https://www.baeldung.com/hibernate-spatial for an example
 - see https://stackoverflow.com/questions/45713934/jackson-deserialize-geojson-point-in-spring-boot
 - see https://stackoverflow.com/questions/64724130/kotlin-and-jackson-missing-type-id-when-trying-to-resolve-subtype-of-simple-ty
 - see https://www.xspdf.com/resolution/53220889.html
+- see https://auth0.com/blog/integrating-spring-data-jpa-postgresql-liquibase/ example jpa postgres liquibase authentication
+- see https://dokumen.pub/qdownload/postgresql-high-performance-cookbook-mastering-query-optimization-database-monitoring-and-performance-tuning-for-postgresql-9781785284335-1785284339-9781785287244-1785287249.html for documentation on postgresql

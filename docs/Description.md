@@ -6,6 +6,10 @@ Start application
 ```bash 
 mvn spring-boot:run
 ```
+## Information Model
+The information model
+
+![Information Model](./images/BestuurlijkeGrenzenV2-API-resource-model.png)
 
 ### Endpoints
 - http://localhost:8080/bestuurlijkegebieden (re)load all bestuurlijkegebieden

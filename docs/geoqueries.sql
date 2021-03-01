@@ -250,3 +250,15 @@ SELECT ST_Union(b.geometry) as singlegeom
 FROM bestuurlijkgebied b
 )
 select st_astext(st_difference(waterschap.singlegeom, land.geometry)) from land, waterschap;			       
+
+--
+-- difference in area
+--
+with land as (
+select geometry from bestuurlijkgebied where identificatie = 'LND6030.A'
+),
+ waterschap as (
+SELECT ST_Union(b.geometry) as singlegeom
+FROM bestuurlijkgebied b
+)
+select 'waterschap: ', st_area(waterschap.singlegeom), 'land: ', st_area(land.geometry), 'difference: ', st_area(waterschap.singlegeom) - st_area(land.geometry) from land, waterschap;			       

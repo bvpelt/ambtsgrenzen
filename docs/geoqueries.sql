@@ -215,3 +215,38 @@ where b1.openbaarlichaam_id = o1.id and
         b1.id <> b2.id and
 		b2.id NOT in (400, 500);                            
                             
+--
+			    
+with land as (
+select geometry from bestuurlijkgebied where identificatie like 'L%'
+),
+ waterschap as (
+SELECT ST_Union(b.geometry) as singlegeom
+FROM bestuurlijkgebied b
+)
+select st_astext(st_difference(land.geometry, waterschap.singlegeom)) from land, waterschap;
+			       
+--
+-- determine if waterschap covers the netherlands
+--			       
+
+with land as (
+select geometry from bestuurlijkgebied where identificatie like 'L%'
+),
+ waterschap as (
+SELECT ST_Union(b.geometry) as singlegeom
+FROM bestuurlijkgebied b
+)
+select st_astext(st_difference(land.geometry, waterschap.singlegeom)) from land, waterschap;			       
+			       
+-- 
+-- and if netherlands covers waterschappen
+--
+with land as (
+select geometry from bestuurlijkgebied where identificatie like 'L%'
+),
+ waterschap as (
+SELECT ST_Union(b.geometry) as singlegeom
+FROM bestuurlijkgebied b
+)
+select st_astext(st_difference(waterschap.singlegeom, land.geometry)) from land, waterschap;			       

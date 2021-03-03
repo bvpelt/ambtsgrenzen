@@ -262,3 +262,149 @@ SELECT ST_Union(b.geometry) as singlegeom
 FROM bestuurlijkgebied b
 )
 select 'waterschap: ', st_area(waterschap.singlegeom), 'land: ', st_area(land.geometry), 'difference: ', st_area(waterschap.singlegeom) - st_area(land.geometry) from land, waterschap;			       
+
+			       
+-- check geo spatial operators
+			       
+-- exacte polygoon van perceel
+select 'exacte bron', b1.id, b1.identificatie, o1.name, 'intersects', b2.id, b2.identificatie, o2.name, b2.geometry
+from bestuurlijkgebied b1, openbaarlichaam o1, bestuurlijkgebied b2, openbaarlichaam o2
+where b1.openbaarlichaam_id = o1.id and
+        b2.openbaarlichaam_id = o2.id and
+    ST_intersects(b1.geometry, b2.geometry) and
+        o1.name = 'perceel 500' and
+        b1.id <> b2.id and
+		b2.id NOT in (400, 600);
+
+-- verkleinde met 1mm polygoon van perceel
+select 'verkleinde bron', b1.id, b1.identificatie, o1.name, 'intersects', b2.id, b2.identificatie, o2.name, b2.geometry
+from bestuurlijkgebied b1, openbaarlichaam o1, bestuurlijkgebied b2, openbaarlichaam o2
+where b1.openbaarlichaam_id = o1.id and
+        b2.openbaarlichaam_id = o2.id and
+    ST_intersects(b1.geometry, b2.geometry) and
+        o1.name = 'Perceel 500 -1' and
+        b1.id <> b2.id and
+		b2.id NOT in (400, 500);
+
+-- exacte polygoon van perceel
+select 'exacte bron', b1.id, b1.identificatie, o1.name, 'overlaps', b2.id, b2.identificatie, o2.name, b2.geometry
+from bestuurlijkgebied b1, openbaarlichaam o1, bestuurlijkgebied b2, openbaarlichaam o2
+where b1.openbaarlichaam_id = o1.id and
+        b2.openbaarlichaam_id = o2.id and
+    ST_overlaps(b1.geometry, b2.geometry) and
+        o1.name = 'perceel 500' and
+        b1.id <> b2.id and
+		b2.id NOT in (400, 600);
+
+-- verkleinde met 1mm polygoon van perceel
+select 'verkleinde bron', b1.id, b1.identificatie, o1.name, 'overlaps', b2.id, b2.identificatie, o2.name, b2.geometry
+from bestuurlijkgebied b1, openbaarlichaam o1, bestuurlijkgebied b2, openbaarlichaam o2
+where b1.openbaarlichaam_id = o1.id and
+        b2.openbaarlichaam_id = o2.id and
+    ST_overlaps(b1.geometry, b2.geometry) and
+        o1.name = 'Perceel 500 -1' and
+        b1.id <> b2.id and
+		b2.id NOT in (400, 500);
+
+-- exacte polygoon van perceel
+select 'exacte bron', b1.id, b1.identificatie, o1.name, 'covers', b2.id, b2.identificatie, o2.name, b2.geometry
+from bestuurlijkgebied b1, openbaarlichaam o1, bestuurlijkgebied b2, openbaarlichaam o2
+where b1.openbaarlichaam_id = o1.id and
+        b2.openbaarlichaam_id = o2.id and
+    ST_covers(b1.geometry, b2.geometry) and
+        o1.name = 'perceel 500' and
+        b1.id <> b2.id and
+		b2.id NOT in (400, 600);
+		
+-- verkleinde met 1mm polygoon van perceel		
+select 'verkleinde bron', b1.id, b1.identificatie, o1.name, 'covers', b2.id, b2.identificatie, o2.name, b2.geometry
+from bestuurlijkgebied b1, openbaarlichaam o1, bestuurlijkgebied b2, openbaarlichaam o2
+where b1.openbaarlichaam_id = o1.id and
+        b2.openbaarlichaam_id = o2.id and
+    ST_covers(b1.geometry, b2.geometry) and
+        o1.name = 'Perceel 500 -1' and
+        b1.id <> b2.id and
+		b2.id NOT in (400, 500);	
+
+-- exacte polygoon van perceel
+select 'exacte bron', b1.id, b1.identificatie, o1.name, 'within', b2.id, b2.identificatie, o2.name, b2.geometry
+from bestuurlijkgebied b1, openbaarlichaam o1, bestuurlijkgebied b2, openbaarlichaam o2
+where b1.openbaarlichaam_id = o1.id and
+        b2.openbaarlichaam_id = o2.id and
+    ST_within(b1.geometry, b2.geometry) and
+        o1.name = 'perceel 500' and
+        b1.id <> b2.id and
+		b2.id NOT in (400, 600);
+		
+-- verkleinde met 1mm polygoon van perceel
+select 'verkleinde bron', b1.id, b1.identificatie, o1.name, 'within', b2.id, b2.identificatie, o2.name, b2.geometry
+from bestuurlijkgebied b1, openbaarlichaam o1, bestuurlijkgebied b2, openbaarlichaam o2
+where b1.openbaarlichaam_id = o1.id and
+        b2.openbaarlichaam_id = o2.id and
+    ST_within(b1.geometry, b2.geometry) and
+        o1.name = 'Perceel 500 -1' and
+        b1.id <> b2.id and
+		b2.id NOT in (400, 500);
+		
+-- exacte polygoon van perceel
+select 'exacte bron', b1.id, b1.identificatie, o1.name, 'contains', b2.id, b2.identificatie, o2.name, b2.geometry
+from bestuurlijkgebied b1, openbaarlichaam o1, bestuurlijkgebied b2, openbaarlichaam o2
+where b1.openbaarlichaam_id = o1.id and
+        b2.openbaarlichaam_id = o2.id and
+    ST_contains(b1.geometry, b2.geometry) and
+        o1.name = 'perceel 500' and
+        b1.id <> b2.id and
+		b2.id NOT in (400, 600);
+		
+-- verkleinde met 1mm polygoon van perceel
+select 'verkleinde bron', b1.id, b1.identificatie, o1.name, 'contains', b2.id, b2.identificatie, o2.name, b2.geometry
+from bestuurlijkgebied b1, openbaarlichaam o1, bestuurlijkgebied b2, openbaarlichaam o2
+where b1.openbaarlichaam_id = o1.id and
+        b2.openbaarlichaam_id = o2.id and
+    ST_contains(b1.geometry, b2.geometry) and
+        o1.name = 'Perceel 500 -1' and
+        b1.id <> b2.id and
+		b2.id NOT in (400, 500);		
+
+		
+-- exacte polygoon van perceel
+select 'exacte bron', b1.id, b1.identificatie, o1.name, 'coveredby', b2.id, b2.identificatie, o2.name, b2.geometry
+from bestuurlijkgebied b1, openbaarlichaam o1, bestuurlijkgebied b2, openbaarlichaam o2
+where b1.openbaarlichaam_id = o1.id and
+        b2.openbaarlichaam_id = o2.id and
+    ST_coveredby(b1.geometry, b2.geometry) and
+        o1.name = 'perceel 500' and
+        b1.id <> b2.id and
+		b2.id NOT in (400, 600);
+		
+-- verkleinde met 1mm polygoon van perceel
+select 'verkleinde bron', b1.id, b1.identificatie, o1.name, 'coveredby', b2.id, b2.identificatie, o2.name, b2.geometry
+from bestuurlijkgebied b1, openbaarlichaam o1, bestuurlijkgebied b2, openbaarlichaam o2
+where b1.openbaarlichaam_id = o1.id and
+        b2.openbaarlichaam_id = o2.id and
+    ST_coveredby(b1.geometry, b2.geometry) and
+        o1.name = 'Perceel 500 -1' and
+        b1.id <> b2.id and
+		b2.id NOT in (400, 500);		
+
+-- exacte polygoon van perceel
+select 'exacte bron', b1.id, b1.identificatie, o1.name, 'crosses', b2.id, b2.identificatie, o2.name, b2.geometry
+from bestuurlijkgebied b1, openbaarlichaam o1, bestuurlijkgebied b2, openbaarlichaam o2
+where b1.openbaarlichaam_id = o1.id and
+        b2.openbaarlichaam_id = o2.id and
+    ST_crosses(b1.geometry, b2.geometry) and
+        o1.name = 'perceel 500' and
+        b1.id <> b2.id and
+		b2.id NOT in (400, 600);
+		
+-- verkleinde met 1mm polygoon van perceel
+select 'verkleinde bron', b1.id, b1.identificatie, o1.name, 'crosses', b2.id, b2.identificatie, o2.name, b2.geometry
+from bestuurlijkgebied b1, openbaarlichaam o1, bestuurlijkgebied b2, openbaarlichaam o2
+where b1.openbaarlichaam_id = o1.id and
+        b2.openbaarlichaam_id = o2.id and
+    ST_crosses(b1.geometry, b2.geometry) and
+        o1.name = 'Perceel 500 -1' and
+        b1.id <> b2.id and
+		b2.id NOT in (400, 500);		
+		
+						       

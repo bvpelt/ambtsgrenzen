@@ -424,4 +424,15 @@ where b1.openbaarlichaam_id = o1.id and
 	ST_area(ST_intersection(b1.geometry, b2.geometry)) > 0.1 and
         o1.name = 'perceel 500' and
         b1.id <> b2.id and
-		b2.id NOT in (400, 600);				       
+		b2.id NOT in (400, 600);		
+				
+-- exacte polygoon van gemeente zaltbommel
+select 'exacte bron', b1.id, b1.identificatie, o1.name, 'intersects', b2.id, b2.identificatie, o2.name, ST_intersection(b1.geometry, b2.geometry), 100*ST_area(ST_intersection(b1.geometry, b2.geometry))/ST_area(b1.geometry), b2.geometry
+from bestuurlijkgebied b1, openbaarlichaam o1, bestuurlijkgebied b2, openbaarlichaam o2
+where b1.openbaarlichaam_id = o1.id and
+        b2.openbaarlichaam_id = o2.id and
+    ST_intersects(b1.geometry, b2.geometry) and
+	ST_area(ST_intersection(b1.geometry, b2.geometry)) > 0.1 and
+        o1.name = 'Zaltbommel' and
+        b1.id <> b2.id and
+		b2.id NOT in (400, 600);					

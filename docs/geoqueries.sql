@@ -456,3 +456,43 @@ where b1.openbaarlichaam_id = o1.id and
 		ST_intersects(b1.geometry, b2.geometry) and
 		not ST_Touches(b1.geometry, b2.geometry) and        
 		b2.id NOT in (400, 600);					
+
+
+--
+-- Check queries for different geometries
+--
+
+select * from bestuurlijkgebied b, openbaarlichaam o
+where b.openbaarlichaam_id = o.id and
+	o.name in ('Rotterdam', 'Amsterdam');
+	
+select o.name, st_area(b.geometry) as area, st_npoints(b.geometry) as npoints, st_nrings(b.geometry) as nrings from bestuurlijkgebied b, openbaarlichaam o
+where b.openbaarlichaam_id = o.id and
+	o.name in ('Rotterdam', 'Amsterdam');
+	
+select o.name, st_area(b.geometry) as area, st_npoints(b.geometry) as npoints, st_nrings(b.geometry) as nrings, st_isvaliddetail(b.geometry) as valid
+from bestuurlijkgebied b, openbaarlichaam o
+where b.openbaarlichaam_id = o.id and o.type='Gemeente'
+order by valid, nrings desc, npoints desc, o.name;	
+
+--
+-- show intersected areas
+--
+with rect as (
+  select 'rect' as name, 
+		 ST_GeometryFromText( 'POLYGON((89568.796 431885.955, 86023.996 431892.675, 86017.276 435004.035, 89629.276 434990.595, 89568.796 431885.955))', 28992) as geo
+)
+select o.name, rect.name, b.geometry, rect.geo from bestuurlijkgebied b, openbaarlichaam o, rect
+where b.openbaarlichaam_id = o.id and
+st_intersects(b.geometry, rect.geo);
+
+--
+-- show intersected parts
+--
+with rect as (
+  select 'rect' as name, 
+		 ST_GeometryFromText( 'POLYGON((89568.796 431885.955, 86023.996 431892.675, 86017.276 435004.035, 89629.276 434990.595, 89568.796 431885.955))', 28992) as geo
+)
+select o.name, rect.name, b.geometry, st_intersection(b.geometry, rect.geo) as intersection, rect.geo from bestuurlijkgebied b, openbaarlichaam o, rect
+where b.openbaarlichaam_id = o.id and
+st_intersects(b.geometry, rect.geo);

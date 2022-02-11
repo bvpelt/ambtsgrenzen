@@ -72,6 +72,11 @@ psql -h localhost -d ambtsdb --username testuser
 ### Spatial
 See https://www.baeldung.com/hibernate-spatial for an example
 
+### Convert from postgres to gml
+```shell
+ogr2ogr -f GML export.gml PG:'dbname=ambtsdb user=testuser host=localhost' bestuurlijkgebied
+```
+
 # References
 - Geo spation example https://mkyong.com/spring-boot/spring-boot-spring-data-jpa
 - https://postgis.net/workshops/postgis-intro/indexing.html

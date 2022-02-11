@@ -75,6 +75,7 @@ See https://www.baeldung.com/hibernate-spatial for an example
 ### Convert from postgres to gml
 ```shell
 ogr2ogr -f GML export.gml PG:'dbname=ambtsdb user=testuser host=localhost' bestuurlijkgebied
+ogr2ogr -f GML export.gml PG:'dbname=ambtsdb user=testuser password=12345 host=localhost' -sql "select id, identificatie, domein, type, openbaarlichaam_id, geometry from bestuurlijkgebied" 
 ```
 
 # References

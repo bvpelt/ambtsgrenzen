@@ -6,6 +6,10 @@ Start application
 ```bash 
 mvn spring-boot:run
 ```
+## Information Model
+The information model
+
+![Information Model](./images/BestuurlijkeGrenzenV2-API-resource-model.png)
 
 ### Endpoints
 - http://localhost:8080/bestuurlijkegebieden (re)load all bestuurlijkegebieden
@@ -68,6 +72,12 @@ psql -h localhost -d ambtsdb --username testuser
 ### Spatial
 See https://www.baeldung.com/hibernate-spatial for an example
 
+### Convert from postgres to gml
+```shell
+ogr2ogr -f GML export.gml PG:'dbname=ambtsdb user=testuser host=localhost' bestuurlijkgebied
+ogr2ogr -f GML export.gml PG:'dbname=ambtsdb user=testuser password=12345 host=localhost' -sql "select id, identificatie, domein, type, openbaarlichaam_id, geometry from bestuurlijkgebied" 
+```
+
 # References
 - Geo spation example https://mkyong.com/spring-boot/spring-boot-spring-data-jpa
 - https://postgis.net/workshops/postgis-intro/indexing.html
@@ -92,3 +102,5 @@ See https://www.baeldung.com/hibernate-spatial for an example
 - see https://stackoverflow.com/questions/45713934/jackson-deserialize-geojson-point-in-spring-boot
 - see https://stackoverflow.com/questions/64724130/kotlin-and-jackson-missing-type-id-when-trying-to-resolve-subtype-of-simple-ty
 - see https://www.xspdf.com/resolution/53220889.html
+- see https://auth0.com/blog/integrating-spring-data-jpa-postgresql-liquibase/ example jpa postgres liquibase authentication
+- see https://dokumen.pub/qdownload/postgresql-high-performance-cookbook-mastering-query-optimization-database-monitoring-and-performance-tuning-for-postgresql-9781785284335-1785284339-9781785287244-1785287249.html for documentation on postgresql

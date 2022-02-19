@@ -17,6 +17,7 @@
 	<properties>
 		<gson.version>2.8.6</gson.version>
 		<java.version>11</java.version>
+		<javax.servlet-api.version>4.0.1</javax.servlet-api.version>
 		<lombok.version>1.18.10</lombok.version>
 		<micrometer.version>1.5.1</micrometer.version>
 	</properties>
@@ -91,6 +92,58 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>io.swagger</groupId>
+			<artifactId>swagger-inflector</artifactId>
+			<version>2.0.5</version>
+			<exclusions>
+				<exclusion>
+					<groupId>com.fasterxml.jackson.datatype</groupId>
+					<artifactId>jackson-datatype-joda</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>joda-time</groupId>
+					<artifactId>joda-time</artifactId>
+				</exclusion>
+				<!--
+				<exclusion>
+					<groupId>ch.qos.logback</groupId>
+					<artifactId>logback-classic</artifactId>
+				</exclusion>
+				-->
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.openapitools</groupId>
+			<artifactId>jackson-databind-nullable</artifactId>
+			<version>0.2.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.integration</groupId>
+			<artifactId>spring-integration-http</artifactId>
+			<version>5.4.4</version>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>3.0.0</version>
+			<!--
+			<exclusions>
+				<exclusion>
+					<groupId>ch.qos.logback</groupId>
+					<artifactId>logback-classic</artifactId>
+				</exclusion>
+			</exclusions>
+			-->
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>${javax.servlet-api.version}</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -98,6 +151,47 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<exclude>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+						</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.openapitools</groupId>
+				<artifactId>openapi-generator-maven-plugin</artifactId>
+				<version>5.0.1</version>
+				<executions>
+					<execution>
+						<id>spring-boot-api</id>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<inputSpec>${project.basedir}/src/main/resources/bestuurlijkegrenzen-api.yaml</inputSpec>
+							<generatorName>java</generatorName>
+							<configOptions>
+								<basePackage>com.bsoft.ambtsgrenzen</basePackage>
+								<apiPackage>com.bsoft.ambtsgrenzen.api</apiPackage>
+								<invokerPackage>com.bsoft.ambtsgrenzen.api</invokerPackage>
+								<modelPackage>com.bsoft.ambtsgrenzen.model</modelPackage>
+								<configPackage>com.bsoft.ambtsgrenzen.configuration</configPackage>
+								<skipDefaultInterface>true</skipDefaultInterface>
+								<interfaceOnly>true</interfaceOnly>
+								<hideGenerationTimestamp>true</hideGenerationTimestamp>
+								<enablePostProcessFile>true</enablePostProcessFile>
+								<dateLibrary>java8</dateLibrary>
+								<library>resttemplate</library>
+								<skipIfSpecIsUnchanged>true</skipIfSpecIsUnchanged>
+								<useBeanValidation>true</useBeanValidation>
+							</configOptions>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

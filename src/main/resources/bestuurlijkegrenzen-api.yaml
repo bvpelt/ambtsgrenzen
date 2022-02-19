@@ -29,105 +29,21 @@ info:
     \ Unie van Waterschappen in samenwerking met Het Waterschapshuis."
 servers:
   - url: https://brk.basisregistraties.overheid.nl/api/bestuurlijke-grenzen/v2
-    description: production
-
+    description: prod
 paths:
   /openbare-lichamen:
     get:
       parameters:
-        - name: "oin"
-          description: "OIN"
-          in: "query"
-          required: false
-          schema:
-            type: "string"
-        - name: "code"
-          description: "Voor gemeentes, provincies en waterschappen wordt de CBS code\
-            \ gehanteerd. Voor het Rijk wordt de RVIG code gehanteerd. De codes hebben\
-            \ het volgende formaat:\n  - Gemeentes: GM\\d{4}  <br>\n    bijvoorbeeld:\
-            \ GM1234\n  - Provincies: PV\\d{2}  <br>\n    bijvoorbeeld: PV12\n  - Waterschappen:\
-            \ WS\\d{4}  <br>\n    bijvoorbeeld: WS1234\n  - Rijk: LND\\d{4}  <br>\n  \
-            \  bijvoorbeeld: LND6030"
-          in: "query"
-          required: false
-          schema:
-            type: "string"
-            pattern: "^((PV\\d{2})|((GM|WS|LND)\\d{4}))$"
-        - name: "type"
-          description: "Type openbaar lichaam"
-          in: "query"
-          required: false
-          schema:
-            type: "string"
-            enum:
-              - "Rijk"
-              - "Waterschap"
-              - "Provincie"
-              - "Gemeente"
-        - description: "Bestuurslaag"
-          in: "query"
-          name: "bestuurslaag"
-          required: false
-          schema:
-            type: "string"
-            enum:
-              - "rijk"
-              - "ministerie"
-              - "provincie"
-              - "waterschap"
-              - "gemeenschappelijke regeling"
-              - "gemeente"
-        - description: "Datum waarop de resource geldig moet zijn. Wanneer niet gespecificeerd\
-            \ geldt de huidige systeemdatum."
-          in: "query"
-          name: "geldigOp"
-          required: false
-          schema:
-            type: "string"
-            format: "date"
-        - name: "expand"
-          in: "query"
-          required: false
-          schema:
-            type: "array"
-            items:
-              type: "string"
-              enum:
-                - "territoriaalGebied"
-        - description: "Gewenste CRS van de coördinaten in de response"
-          in: "header"
-          name: "Accept-Crs"
-          required: false
-          schema:
-            type: "string"
-            default: "epsg:4258"
-            enum:
-              - "epsg:4258"
-              - "epsg:28992"
-        - description: "Pagina nummer"
-          name: "page"
-          in: "query"
-          required: false
-          schema:
-            type: "integer"
-            minimum: 1
-            default: 1
-        - name: "pageSize"
-          in: "query"
-          required: false
-          schema:
-            type: "integer"
-            enum:
-              - 10
-              - 20
-              - 50
-            default: 10
-        - description: "Geldige API Key om deze request uit te kunnen voeren."
-          in: "header"
-          name: "X-Api-Key"
-          required: true
-          schema:
-            type: "string"
+        - $ref: "#/components/parameters/oin"
+        - $ref: "#/components/parameters/codeQuery"
+        - $ref: "#/components/parameters/typeOpenbaarLichaam"
+        - $ref: "#/components/parameters/bestuurslaag"
+        - $ref: "#/components/parameters/geldigOp"
+        - $ref: "#/components/parameters/expand"
+        - $ref: "#/components/parameters/acceptCrs"
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/pageSize"
+        - $ref: "#/components/parameters/apiKey"
       responses:
         "200":
           $ref: "#/components/responses/OpenbareLichamen"
@@ -145,92 +61,15 @@ paths:
   /openbare-lichamen/_zoek:
     post:
       parameters:
-        - name: "type"
-          description: "Type openbaar lichaam"
-          in: "query"
-          required: false
-          schema:
-            type: "string"
-            enum:
-              - "Rijk"
-              - "Waterschap"
-              - "Provincie"
-              - "Gemeente"
-        - description: "Bestuurslaag"
-          in: "query"
-          name: "bestuurslaag"
-          required: false
-          schema:
-            type: "string"
-            enum:
-              - "rijk"
-              - "ministerie"
-              - "provincie"
-              - "waterschap"
-              - "gemeenschappelijke regeling"
-              - "gemeente"
-
-        - description: "Datum waarop de resource geldig moet zijn. Wanneer niet gespecificeerd\
-            \ geldt de huidige systeemdatum."
-          in: "query"
-          name: "geldigOp"
-          required: false
-          schema:
-            type: "string"
-            format: "date"
-        - name: "expand"
-          in: "query"
-          required: false
-          schema:
-            type: "array"
-            items:
-              type: "string"
-              enum:
-                - "territoriaalGebied"
-        - description: "Gewenste CRS van de coördinaten in de response"
-          in: "header"
-          name: "Accept-Crs"
-          required: false
-          schema:
-            type: "string"
-            default: "epsg:4258"
-            enum:
-              - "epsg:4258"
-              - "epsg:28992"
-        - name: "Content-Crs"
-          description: "Coordinaatreferentiesysteem van de meegegeven geometrie"
-          in: "header"
-          required: false
-          schema:
-            type: "string"
-            default: "epsg:4258"
-            enum:
-              - "epsg:4258"
-              - "epsg:28992"
-        - description: "Pagina nummer"
-          name: "page"
-          in: "query"
-          required: false
-          schema:
-            type: "integer"
-            minimum: 1
-            default: 1
-        - name: "pageSize"
-          in: "query"
-          required: false
-          schema:
-            type: "integer"
-            enum:
-              - 10
-              - 20
-              - 50
-            default: 10
-        - description: "Geldige API Key om deze request uit te kunnen voeren."
-          in: "header"
-          name: "X-Api-Key"
-          required: true
-          schema:
-            type: "string"
+        - $ref: "#/components/parameters/typeOpenbaarLichaam"
+        - $ref: "#/components/parameters/bestuurslaag"
+        - $ref: "#/components/parameters/geldigOp"
+        - $ref: "#/components/parameters/expand"
+        - $ref: "#/components/parameters/acceptCrs"
+        - $ref: "#/components/parameters/contentCrs"
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/pageSize"
+        - $ref: "#/components/parameters/apiKey"
       requestBody:
         required: true
         content:
@@ -239,13 +78,7 @@ paths:
               type: "object"
               properties:
                 geometrie:
-                  description: "Het veld waarop geografisch gezocht moet worden. In\
-                    \ dit geval is dit het veld `geometrie`."
-                  type: "object"
-                  oneOf:
-                    - $ref: "#/components/schemas/Intersects"
-                    - $ref: "#/components/schemas/Contains"
-                    - $ref: "#/components/schemas/Within"
+                    $ref: "#/components/schemas/GeometryOperation"
       responses:
         "200":
           $ref: "#/components/responses/OpenbareLichamen"
@@ -263,43 +96,10 @@ paths:
   /openbare-lichamen/{code}:
     get:
       parameters:
-        - name: "code"
-          description: "Voor gemeentes, provincies en waterschappen wordt de CBS code\
-            \ gehanteerd. Voor het Rijk wordt de RVIG code gehanteerd. De codes hebben\
-            \ het volgende formaat:\n  - Gemeentes: GM\\d{4}  <br>\n    bijvoorbeeld:\
-            \ GM1234\n  - Provincies: PV\\d{2}  <br>\n    bijvoorbeeld: PV12\n  - Waterschappen:\
-            \ WS\\d{4}  <br>\n    bijvoorbeeld: WS1234\n  - Rijk: LND\\d{4}  <br>\n  \
-            \  bijvoorbeeld: LND6030"
-          in: "path"
-          required: true
-          schema:
-            type: "string"
-            pattern: "^((PV\\d{2})|((GM|WS|LND)\\d{4}))$"
-        - name: "expand"
-          in: "query"
-          required: false
-          schema:
-            type: "array"
-            items:
-              type: "string"
-              enum:
-                - "territoriaalGebied"
-        - description: "Gewenste CRS van de coördinaten in de response"
-          in: "header"
-          name: "Accept-Crs"
-          required: false
-          schema:
-            type: "string"
-            default: "epsg:4258"
-            enum:
-              - "epsg:4258"
-              - "epsg:28992"
-        - description: "Geldige API Key om deze request uit te kunnen voeren."
-          in: "header"
-          name: "X-Api-Key"
-          required: true
-          schema:
-            type: "string"
+        - $ref: "#/components/parameters/code"
+        - $ref: "#/components/parameters/expand"
+        - $ref: "#/components/parameters/acceptCrs"
+        - $ref: "#/components/parameters/apiKey"
       responses:
         "200":
           $ref: "#/components/responses/OpenbaarLichaam"
@@ -317,77 +117,14 @@ paths:
   /bestuurlijke-gebieden:
     get:
       parameters:
-        - name: "identificatie"
-          description: "Voor de identificatie van bestuurlijke gebieden van gemeentes,\
-            \ provincies en waterschappen wordt de CBS code gehanteerd. Voor het Rijk\
-            \ wordt de RVIG code gehanteerd, met een extra discriminator voor het specifieke\
-            \ gebied. De codes hebben het volgende formaat:\n  - Gemeentes: GM\\d{4} \
-            \ <br>\n    bijvoorbeeld: GM1234\n  - Provincies: PV\\d{2}  <br>\n    bijvoorbeeld:\
-            \ PV12\n  - Waterschappen: WS\\d{4}  <br>\n    bijvoorbeeld: WS1234\n  - Rijk:\
-            \ LND\\d{4}\\..{1}  <br>\n    bijvoorbeeld: LND6030.A (landsgrens + territoriale\
-            \ wateren) of LND6030.B (landsgrens + territoriale wateren + EEZ)"
-          in: "query"
-          required: false
-          schema:
-            type: "string"
-            pattern: "^((PV\\d{2})|((GM|WS)\\d{4})|(LND\\d{4}\\..{1}))$"
-        - name: "type"
-          description: "Type bestuurlijk gebied"
-          in: "query"
-          required: false
-          schema:
-            type: "string"
-            enum:
-              - "territoriaal"
-              - "territoriaalInclusiefEEZ"
-        - name: "openbaarLichaam"
-          description: "De code van het gerelateerde openbaar lichaam"
-          in: "query"
-          required: false
-          schema:
-            type: "string"
-        - description: "Datum waarop de resource geldig moet zijn. Wanneer niet gespecificeerd\
-            \ geldt de huidige systeemdatum."
-          in: "query"
-          name: "geldigOp"
-          required: false
-          schema:
-            type: "string"
-            format: "date"
-        - description: "Gewenste CRS van de coördinaten in de response"
-          in: "header"
-          name: "Accept-Crs"
-          required: false
-          schema:
-            type: "string"
-            default: "epsg:4258"
-            enum:
-              - "epsg:4258"
-              - "epsg:28992"
-        - description: "Pagina nummer"
-          name: "page"
-          in: "query"
-          required: false
-          schema:
-            type: "integer"
-            minimum: 1
-            default: 1
-        - name: "pageSize"
-          in: "query"
-          required: false
-          schema:
-            type: "integer"
-            enum:
-              - 10
-              - 20
-              - 50
-            default: 10
-        - description: "Geldige API Key om deze request uit te kunnen voeren."
-          in: "header"
-          name: "X-Api-Key"
-          required: true
-          schema:
-            type: "string"
+        - $ref: "#/components/parameters/identificatie"
+        - $ref: "#/components/parameters/typeBestuurlijkGebied"
+        - $ref: "#/components/parameters/openbaarLichaam"
+        - $ref: "#/components/parameters/geldigOp"
+        - $ref: "#/components/parameters/acceptCrs"
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/pageSize"
+        - $ref: "#/components/parameters/apiKey"
       responses:
         "200":
           $ref: "#/components/responses/BestuurlijkeGebieden"
@@ -405,73 +142,14 @@ paths:
   /bestuurlijke-gebieden/_zoek:
     post:
       parameters:
-        - name: "type"
-          description: "Type bestuurlijk gebied"
-          in: "query"
-          required: false
-          schema:
-            type: "string"
-            enum:
-              - "territoriaal"
-              - "territoriaalInclusiefEEZ"
-        - name: "openbaarLichaam"
-          description: "De code van het gerelateerde openbaar lichaam"
-          in: "query"
-          required: false
-          schema:
-            type: "string"
-        - description: "Datum waarop de resource geldig moet zijn. Wanneer niet gespecificeerd\
-            \ geldt de huidige systeemdatum."
-          in: "query"
-          name: "geldigOp"
-          required: false
-          schema:
-            type: "string"
-            format: "date"
-        - description: "Gewenste CRS van de coördinaten in de response"
-          in: "header"
-          name: "Accept-Crs"
-          required: false
-          schema:
-            type: "string"
-            default: "epsg:4258"
-            enum:
-              - "epsg:4258"
-              - "epsg:28992"
-        - name: "Content-Crs"
-          description: "Coordinaatreferentiesysteem van de meegegeven geometrie"
-          in: "header"
-          required: false
-          schema:
-            type: "string"
-            default: "epsg:4258"
-            enum:
-              - "epsg:4258"
-              - "epsg:28992"
-        - description: "Pagina nummer"
-          name: "page"
-          in: "query"
-          required: false
-          schema:
-            type: "integer"
-            minimum: 1
-            default: 1
-        - name: "pageSize"
-          in: "query"
-          required: false
-          schema:
-            type: "integer"
-            enum:
-              - 10
-              - 20
-              - 50
-            default: 10
-        - description: "Geldige API Key om deze request uit te kunnen voeren."
-          in: "header"
-          name: "X-Api-Key"
-          required: true
-          schema:
-            type: "string"
+        - $ref: "#/components/parameters/typeBestuurlijkGebied"
+        - $ref: "#/components/parameters/openbaarLichaam"
+        - $ref: "#/components/parameters/geldigOp"
+        - $ref: "#/components/parameters/acceptCrs"
+        - $ref: "#/components/parameters/contentCrs"
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/pageSize"
+        - $ref: "#/components/parameters/apiKey"
       requestBody:
         required: true
         content:
@@ -480,13 +158,7 @@ paths:
               type: "object"
               properties:
                 geometrie:
-                  description: "Het veld waarop geografisch gezocht moet worden. In\
-                    \ dit geval is dit het veld `geometrie`."
-                  type: "object"
-                  oneOf:
-                    - $ref: "#/components/schemas/Intersects"
-                    - $ref: "#/components/schemas/Contains"
-                    - $ref: "#/components/schemas/Within"
+                  $ref: "#/components/schemas/GeometryOperation"
       responses:
         "200":
           $ref: "#/components/responses/BestuurlijkeGebieden"
@@ -504,31 +176,9 @@ paths:
   /bestuurlijke-gebieden/{id}:
     get:
       parameters:
-        - name: "id"
-          description: "identifier van de resource beschrijving. Let op! Deze parameter\
-            \ is niet bedoeld om functioneel mee te \"filteren\" en kan mogelijk veranderen\
-            \ in de loop der tijd. Functionele filters kunnen op collectie- en zoek endpoints\
-            \ toegepast worden."
-          in: "path"
-          required: true
-          schema:
-            type: "string"
-        - description: "Gewenste CRS van de coördinaten in de response"
-          in: "header"
-          name: "Accept-Crs"
-          required: false
-          schema:
-            type: "string"
-            default: "epsg:4258"
-            enum:
-              - "epsg:4258"
-              - "epsg:28992"
-        - description: "Geldige API Key om deze request uit te kunnen voeren."
-          in: "header"
-          name: "X-Api-Key"
-          required: true
-          schema:
-            type: "string"
+        - $ref: "#/components/parameters/id"
+        - $ref: "#/components/parameters/acceptCrs"
+        - $ref: "#/components/parameters/apiKey"
       responses:
         "200":
           $ref: "#/components/responses/BestuurlijkGebied"
@@ -545,6 +195,14 @@ paths:
       summary: "Een specifiek bestuurlijk gebied"
 components:
   headers:
+    Content-Crs:
+      description: "CRS van de teruggegeven geometrie"
+      schema:
+        type: "string"
+        default: "epsg:4258"
+        enum:
+          - "epsg:4258"
+          - "epsg:28992"
     API-Version:
       description: "Versie van de API"
       schema:
@@ -560,7 +218,100 @@ components:
         format: "int32"
         type: "integer"
   parameters:
-
+    bestuurslaag:
+      description: "Bestuurslaag"
+      in: "query"
+      name: "bestuurslaag"
+      required: false
+      schema:
+        type: "string"
+        enum:
+          - "rijk"
+          - "ministerie"
+          - "provincie"
+          - "waterschap"
+          - "gemeenschappelijke regeling"
+          - "gemeente"
+    code:
+      name: "code"
+      description: "Voor gemeentes, provincies en waterschappen wordt de CBS code\
+        \ gehanteerd. Voor het Rijk wordt de RVIG code gehanteerd. De codes hebben\
+        \ het volgende formaat:\n  - Gemeentes: GM\\d{4}  <br>\n    bijvoorbeeld:\
+        \ GM1234\n  - Provincies: PV\\d{2}  <br>\n    bijvoorbeeld: PV12\n  - Waterschappen:\
+        \ WS\\d{4}  <br>\n    bijvoorbeeld: WS1234\n  - Rijk: LND\\d{4}  <br>\n  \
+        \  bijvoorbeeld: LND6030"
+      in: "path"
+      required: true
+      schema:
+        type: "string"
+        pattern: "^((PV\\d{2})|((GM|WS|LND)\\d{4}))$"
+    codeQuery:
+      name: "code"
+      description: "Voor gemeentes, provincies en waterschappen wordt de CBS code\
+        \ gehanteerd. Voor het Rijk wordt de RVIG code gehanteerd. De codes hebben\
+        \ het volgende formaat:\n  - Gemeentes: GM\\d{4}  <br>\n    bijvoorbeeld:\
+        \ GM1234\n  - Provincies: PV\\d{2}  <br>\n    bijvoorbeeld: PV12\n  - Waterschappen:\
+        \ WS\\d{4}  <br>\n    bijvoorbeeld: WS1234\n  - Rijk: LND\\d{4}  <br>\n  \
+        \  bijvoorbeeld: LND6030"
+      in: "query"
+      required: false
+      schema:
+        type: "string"
+        pattern: "^((PV\\d{2})|((GM|WS|LND)\\d{4}))$"
+    id:
+      name: "id"
+      description: "identifier van de resource beschrijving. Let op! Deze parameter\
+        \ is niet bedoeld om functioneel mee te \"filteren\" en kan mogelijk veranderen\
+        \ in de loop der tijd. Functionele filters kunnen op collectie- en zoek endpoints\
+        \ toegepast worden."
+      in: "path"
+      required: true
+      schema:
+        type: "string"
+    identificatie:
+      name: "identificatie"
+      description: "Voor de identificatie van bestuurlijke gebieden van gemeentes,\
+        \ provincies en waterschappen wordt de CBS code gehanteerd. Voor het Rijk\
+        \ wordt de RVIG code gehanteerd, met een extra discriminator voor het specifieke\
+        \ gebied. De codes hebben het volgende formaat:\n  - Gemeentes: GM\\d{4} \
+        \ <br>\n    bijvoorbeeld: GM1234\n  - Provincies: PV\\d{2}  <br>\n    bijvoorbeeld:\
+        \ PV12\n  - Waterschappen: WS\\d{4}  <br>\n    bijvoorbeeld: WS1234\n  - Rijk:\
+        \ LND\\d{4}\\..{1}  <br>\n    bijvoorbeeld: LND6030.A (landsgrens + territoriale\
+        \ wateren) of LND6030.B (landsgrens + territoriale wateren + EEZ)"
+      in: "query"
+      required: false
+      schema:
+        type: "string"
+        pattern: "^((PV\\d{2})|((GM|WS)\\d{4})|(LND\\d{4}\\..{1}))$"
+    oin:
+      name: "oin"
+      description: "OIN"
+      in: "query"
+      required: false
+      schema:
+        type: "string"
+    typeOpenbaarLichaam:
+      name: "type"
+      description: "Type openbaar lichaam"
+      in: "query"
+      required: false
+      schema:
+        type: "string"
+        enum:
+          - "Rijk"
+          - "Waterschap"
+          - "Provincie"
+          - "Gemeente"
+    typeBestuurlijkGebied:
+      name: "type"
+      description: "Type bestuurlijk gebied"
+      in: "query"
+      required: false
+      schema:
+        type: "string"
+        enum:
+          - "territoriaal"
+          - "territoriaalInclusiefEEZ"
     openbaarLichaam:
       name: "openbaarLichaam"
       description: "De code van het gerelateerde openbaar lichaam"
@@ -618,6 +369,17 @@ components:
         enum:
           - "epsg:4258"
           - "epsg:28992"
+    contentCrs:
+      name: "Content-Crs"
+      description: "Coordinaatreferentiesysteem van de meegegeven geometrie"
+      in: "header"
+      required: false
+      schema:
+        default: "epsg:4258"
+        enum:
+          - "epsg:4258"
+          - "epsg:28992"
+        type: "string"
     apiKey:
       description: "Geldige API Key om deze request uit te kunnen voeren."
       in: "header"
@@ -635,9 +397,7 @@ components:
         \ wordt niet ondersteund door de API."
       headers:
         API-Version:
-          description: "Versie van de API"
-          schema:
-            type: "string"
+          $ref: "#/components/headers/API-Version"
     "401":
       content:
         application/problem+json:
@@ -647,9 +407,7 @@ components:
         \ header meegestuurd."
       headers:
         API-Version:
-          description: "Versie van de API"
-          schema:
-            type: "string"
+          $ref: "#/components/headers/API-Version"
     "403":
       content:
         application/problem+json:
@@ -664,9 +422,7 @@ components:
       description: "Not found"
       headers:
         API-Version:
-          description: "Versie van de API"
-          schema:
-            type: "string"
+          $ref: "#/components/headers/API-Version"
     "406":
       content:
         application/problem+json:
@@ -677,9 +433,7 @@ components:
         \ alleen `application/hal+json` terugsturen."
       headers:
         API-Version:
-          description: "Versie van de API"
-          schema:
-            type: "string"
+          $ref: "#/components/headers/API-Version"
     "503":
       content:
         application/problem+json:
@@ -689,9 +443,7 @@ components:
         \ een storing plaats."
       headers:
         API-Version:
-          description: "Versie van de API"
-          schema:
-            type: "string"
+          $ref: "#/components/headers/API-Version"
     OpenbaarLichaam:
       content:
         application/hal+json:
@@ -704,13 +456,7 @@ components:
       description: "OK."
       headers:
         Content-Crs:
-          description: "CRS van de teruggegeven geometrie"
-          schema:
-            type: "string"
-            default: "epsg:4258"
-            enum:
-              - "epsg:4258"
-              - "epsg:28992"
+          $ref: "#/components/headers/Content-Crs"
     OpenbareLichamen:
       content:
         application/hal+json:
@@ -734,24 +480,11 @@ components:
       description: "OK."
       headers:
         Content-Crs:
-          description: "CRS van de teruggegeven geometrie"
-          schema:
-            type: "string"
-            default: "epsg:4258"
-            enum:
-              - "epsg:4258"
-              - "epsg:28992"
-
+          $ref: "#/components/headers/Content-Crs"
         X-Pagination-Limit:
-          description: "Aantal Objecten per pagina"
-          schema:
-            format: "int32"
-            type: "integer"
+          $ref: "#/components/headers/X-Pagination-Limit"
         X-Pagination-Page:
-          description: "Nummer van de huidige pagina (paginanummering start bij 1)"
-          schema:
-            format: "int32"
-            type: "integer"
+          $ref: "#/components/headers/X-Pagination-Page"
     BestuurlijkGebied:
       content:
         application/hal+json:
@@ -760,14 +493,7 @@ components:
       description: "OK."
       headers:
         Content-Crs:
-          description: "CRS van de teruggegeven geometrie"
-          schema:
-            type: "string"
-            default: "epsg:4258"
-            enum:
-              - "epsg:4258"
-              - "epsg:28992"
-
+          $ref: "#/components/headers/Content-Crs"
     BestuurlijkeGebieden:
       content:
         application/hal+json:
@@ -791,23 +517,11 @@ components:
       description: "OK."
       headers:
         Content-Crs:
-          description: "CRS van de teruggegeven geometrie"
-          schema:
-            type: "string"
-            default: "epsg:4258"
-            enum:
-              - "epsg:4258"
-              - "epsg:28992"
+          $ref: "#/components/headers/Content-Crs"
         X-Pagination-Limit:
-          description: "Aantal Objecten per pagina"
-          schema:
-            format: "int32"
-            type: "integer"
+          $ref: "#/components/headers/X-Pagination-Limit"
         X-Pagination-Page:
-          description: "Nummer van de huidige pagina (paginanummering start bij 1)"
-          schema:
-            format: "int32"
-            type: "integer"
+          $ref: "#/components/headers/X-Pagination-Page"
   securitySchemes:
     apiKey:
       description: "De API-key die je hebt gekregen dient bij elke request naar de\
@@ -971,7 +685,7 @@ components:
             - "territoriaal"
             - "territoriaalInclusiefEEZ"
         geometrie:
-          $ref: "#/components/schemas/GeoJSONGeometry"
+          $ref: "#/components/schemas/Geometry"
     BestuurlijkGebiedSelfLinkOnly:
       type: "object"
       required:
@@ -1013,7 +727,7 @@ components:
             - "territoriaal"
             - "territoriaalInclusiefEEZ"
         geometrie:
-          $ref: "#/components/schemas/GeoJSONGeometry"
+          $ref: "#/components/schemas/Geometry"
         _links:
           type: "object"
           required:
@@ -1210,43 +924,32 @@ components:
         - "detail"
         - "invalidParams"
       type: "object"
-    Intersects:
+
+    GeometryOperation:
+      title: "GeometryOperation"
+      description: "Geometry operation valid values Intersects, Contains of Within"
+      required:
+        - "operation"
       type: "object"
-      description: "'overlapt' en 'raakt' vallen hieronder"
       properties:
-        intersects:
-          $ref: "#/components/schemas/GeoJSONGeometry"
-    Contains:
-      type: "object"
-      description: "Omsluit volledig"
-      properties:
-        contains:
-          $ref: "#/components/schemas/GeoJSONGeometry"
-    Within:
-      type: "object"
-      description: "Valt volledig binnen"
-      properties:
-        within:
-          $ref: "#/components/schemas/GeoJSONGeometry"
-    GeoJSONGeometry:
-      title: "GeoJSONGeometry"
-      type: "object"
-      discriminator:
-        propertyName: "type"
-      oneOf:
-        - $ref: "#/components/schemas/Point"
-        - $ref: "#/components/schemas/MultiPoint"
-        - $ref: "#/components/schemas/LineString"
-        - $ref: "#/components/schemas/MultiLineString"
-        - $ref: "#/components/schemas/Polygon"
-      allOf:
-        - $ref: "#/components/schemas/MultiPolygon"
+        operation:
+          description: "Naam van de geometry operation"
+          type: "string"
+          enum:
+            - "Intersects"
+            - "Contains"
+            - "Within"
+        geometry:
+            $ref: "#/components/schemas/Geometry"
+
     Geometry:
       title: "Geometry"
       description: "GeoJSON geometry"
       required:
         - "type"
       type: "object"
+      discriminator:
+        propertyName: type
       properties:
         type:
           description: "The geometry type"
